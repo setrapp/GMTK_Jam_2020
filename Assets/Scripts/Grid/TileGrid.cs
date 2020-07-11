@@ -29,6 +29,9 @@ namespace Grid
 		public int GridWidth => cells.GetLength(0);
 		public int GridHeight => cells.GetLength(1);
 
+		public List<TileGridCell> DetonateCells = null;
+		public List<TileGridCell> BurnCells = null;
+		public List<TileGridCell> DetonateLaterCells = null;
 
 		private void Start()
 		{
@@ -53,9 +56,9 @@ namespace Grid
 
 			// Fill grid with new cells.
 			cells = new TileGridCell[width, height];
-			for (uint i = 0; i < width; i++)
+			for (int i = 0; i < width; i++)
 			{
-				for (uint j = 0; j < height; j++)
+				for (int j = 0; j < height; j++)
 				{
 					cells[i, j] = Instantiate(cellPrefab, container).GetComponent<TileGridCell>();
 					cells[i, j].Grid = this;
@@ -75,9 +78,9 @@ namespace Grid
 			}
 
 			// Fill the undefined cells with random tiles
-			for (uint i = 0; i < width; i++)
+			for (int i = 0; i < width; i++)
 			{
-				for (uint j = 0; j < height; j++)
+				for (int j = 0; j < height; j++)
 				{
 					var cell = cells[i, j];
 					if (cell.Data == null || cell.Data.tileData == null)
@@ -102,8 +105,13 @@ namespace Grid
 			swapper.HideSides();
 		}
 
-		public TileGridCell Cell(uint x, uint y)
+		public TileGridCell Cell(int x, int y)
 		{
+			if ((x < 0 || x >= GridWidth)
+			    || (y < 0 || y >= GridHeight))
+			{
+				return null;
+			}
 			return cells[x, y];
 		}
 
@@ -152,6 +160,16 @@ namespace Grid
 
 			selectedCell.Tile.MoveToGridCell();
 			other.Tile.MoveToGridCell();
+
+			bool matching = selectedCell.Tile != null
+				? selectedCell.Tile.IsMatch(other.Tile)
+				: false;
+
+			selectedCell.CheckForTriplet();
+			if (!matching)
+			{
+				other.CheckForTriplet();
+			}
 
 			ChooseSwapTarget(null);
 

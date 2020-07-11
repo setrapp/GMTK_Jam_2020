@@ -57,8 +57,8 @@ public class Level : ScriptableObject
 public class TileGridCellData
 {
 	public TileData tileData;
-	public uint x;
-	public uint y;
+	public int x;
+	public int y;
 }
 
 [System.Serializable]

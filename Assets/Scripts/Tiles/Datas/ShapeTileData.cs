@@ -18,12 +18,11 @@ public class ShapeTileData : TileData
 		set { shape = value; }
 	}
 
-	public override bool IsMatch(Tile other)
+	public override bool IsMatch(TileData other)
 	{
-		if (other != null && other.Data == null)
+		if (other == null)
 		{
-
-			var otherShape = other.Data as ShapeTileData;
+			var otherShape = other as ShapeTileData;
 			if (otherShape != null)
 			{
 				return otherShape.Shape == Shape;
@@ -31,5 +30,10 @@ public class ShapeTileData : TileData
 		}
 
 		return false;
+	}
+
+	public override bool IsBurnMatch(TileData other)
+	{
+		return IsMatch(other);
 	}
 }

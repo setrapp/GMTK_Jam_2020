@@ -131,4 +131,28 @@ public class Tile : MonoBehaviour
 		transform.SetParent(GridCell.transform);
 		transform.localPosition = Vector3.zero;
 	}
+
+	public bool IsMatch(Tile other)
+	{
+		if (other == null || other.Data == null || Data == null)
+		{
+			return false;
+		}
+
+		// Check if either tile thinks they are a match, because they might have different criteria.
+		// Matching only requires one tile succeed.
+		return Data.IsMatch(other.Data) || other.Data.IsMatch(Data);
+	}
+
+	public bool IsBurnMatch(Tile other)
+	{
+		if (other == null || other.Data == null || Data == null)
+		{
+			return false;
+		}
+
+		// Check if either tile thinks they are a match, because they might have different criteria.
+		// Matching only requires one tile succeed.
+		return Data.IsBurnMatch(other.Data) || other.Data.IsBurnMatch(Data);
+	}
 }
