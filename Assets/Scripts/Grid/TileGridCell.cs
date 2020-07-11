@@ -37,7 +37,7 @@ public class TileGridCell : MonoBehaviour
 				tile.GridCell = this;
 				if (anim != null)
 				{
-					anim.Rebind();
+					StartCoroutine(RebindAnim());
 				}
 			}
 		}
@@ -383,5 +383,15 @@ public class TileGridCell : MonoBehaviour
 		Grid.BurnCells.Clear();
 		Grid.DetonateLaterCells.Clear();
 
+	}
+
+	private IEnumerator RebindAnim()
+	{
+		if (anim != null)
+		{
+			yield return null;
+			anim.Rebind();
+			anim.Update(Time.deltaTime);//TODO Is this required?
+		}
 	}
 }
