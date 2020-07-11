@@ -14,7 +14,7 @@ public class TileSwapper : MonoBehaviour
 	{
 		((RectTransform) transform).sizeDelta = new Vector2(tileSize, tileSize);
 
-		((RectTransform) swapUp.transform).sizeDelta = new Vector2(
+		/*((RectTransform) swapUp.transform).sizeDelta = new Vector2(
 			tileSize * longFactor,
 			tileSize * shortFactor);
 
@@ -28,7 +28,7 @@ public class TileSwapper : MonoBehaviour
 
 		((RectTransform) swapLeft.transform).sizeDelta = new Vector2(
 			tileSize * shortFactor,
-			tileSize * longFactor);
+			tileSize * longFactor);*/
 
 	}
 
