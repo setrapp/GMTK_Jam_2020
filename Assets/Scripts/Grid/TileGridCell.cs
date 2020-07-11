@@ -34,7 +34,6 @@ public class TileGridCell : MonoBehaviour
 			if (tile != value)
 			{
 				tile = value;
-				data.tileData = tile.Data;
 				tile.GridCell = this;
 				if (anim != null)
 				{
@@ -190,25 +189,16 @@ public class TileGridCell : MonoBehaviour
 		return false;
 	}
 
-	public void ValidateTile()
+
+	public void HandleGridChange()
 	{
-		if (data != null)
+		if (Tile != null)
 		{
-			if (data.tileData != null)
-			{
-				if (tile == null || tile.Data != data.tileData)
-				{
-					GenerateTile();
-				}
-			}
-			else
-			{
-				tile.Data = null;
-			}
+			Tile.HandleGridChange();
 		}
 	}
 
-	public void GenerateTile()
+	public void GenerateTile(TileData tileData)
 	{
 		if (tile == null)
 		{
@@ -216,7 +206,7 @@ public class TileGridCell : MonoBehaviour
 		}
 
 		tile.GridCell = this;
-		tile.Data = data.tileData;
+		tile.Data = tileData;
 	}
 
 	public bool CanBeginSwap()
@@ -390,5 +380,10 @@ public class TileGridCell : MonoBehaviour
 			anim.Rebind();
 			anim.Update(Time.deltaTime);//TODO Is this required?
 		}
+	}
+
+	public TileGridCell GetCellBelow()
+	{
+		return Grid.GetCellBelow(this);
 	}
 }

@@ -165,4 +165,9 @@ public class Tile : MonoBehaviour
 	{
 		data.Burn(this);
 	}
+
+	public void HandleGridChange()
+	{
+
+	}
 }
