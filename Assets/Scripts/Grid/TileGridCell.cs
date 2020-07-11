@@ -47,6 +47,7 @@ public class TileGridCell : MonoBehaviour
 			tile = Instantiate(Grid.TilePrefab, transform).GetComponent<Tile>();
 		}
 
+		tile.GridCell = this;
 		tile.Data = data.tileData;
 	}
 }

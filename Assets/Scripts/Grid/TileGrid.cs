@@ -17,10 +17,17 @@ namespace Grid
 		[SerializeField] private Tile tilePrefab = null;
 		[SerializeField] private TileGridCell cellPrefab = null;
 		[SerializeField] private RectTransform container = null;
+		[SerializeField] private TileSwapper swapper = null;
+		public TileSwapper Swapper => swapper;
+
+		public TileGridCell selectedCell = null;
 
 		public Tile TilePrefab => tilePrefab;
 
 		private TileGridCell[,] cells;
+		public int GridWidth => cells.GetLength(0);
+		public int GridHeight => cells.GetLength(1);
+
 
 		private void Start()
 		{
@@ -34,20 +41,20 @@ namespace Grid
 				SetupData = data;
 			}
 
-			var length = SetupData.Length;
 			var width = SetupData.Width;
+			var height = SetupData.Height;
 
 			var rectTransform = transform as RectTransform;
-			container.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y * ((float)width / length));
-			float cellSize = container.sizeDelta.x / length;
+			container.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y * ((float)height / width));
+			float cellSize = container.sizeDelta.x / width;
 			float startX = (-rectTransform.sizeDelta.x / 2) + (cellSize / 2);
 			float startY = (-rectTransform.sizeDelta.y / 2) + (cellSize / 2);
 
 			// Fill grid with new cells.
-			cells = new TileGridCell[length, width];
-			for (uint i = 0; i < length; i++)
+			cells = new TileGridCell[width, height];
+			for (uint i = 0; i < width; i++)
 			{
-				for (uint j = 0; j < width; j++)
+				for (uint j = 0; j < height; j++)
 				{
 					cells[i, j] = Instantiate(cellPrefab, container).GetComponent<TileGridCell>();
 					cells[i, j].Grid = this;
@@ -60,31 +67,26 @@ namespace Grid
 			// Populate defined cells.
 			foreach (var cellData in SetupData.GetCells())
 			{
-				if (cellData.x < length && cellData.y < width)
+				if (cellData.x < width && cellData.y < height)
 				{
 					cells[cellData.x, cellData.y].Data = cellData;
 				}
 			}
 
 			// Fill the undefined cells with random tiles
-			for (uint i = 0; i < length; i++)
+			for (uint i = 0; i < width; i++)
 			{
-				for (uint j = 0; j < width; j++)
+				for (uint j = 0; j < height; j++)
 				{
 					var cell = cells[i, j];
-					if (cell.Data == null)
+					if (cell.Data == null || cell.Data.tileData == null)
 					{
 						cell.Data = new TileGridCellData()
 						{
-							tileData = null,
+							tileData = setupData.GetRandomTileData(),
 							x = i,
 							y = j
 						};
-					}
-
-					if (cell.Data.tileData == null)
-					{
-						cell.Data.tileData = setupData.GetRandomTileData();
 					}
 				}
 			}
@@ -94,6 +96,9 @@ namespace Grid
 			{
 				cell.GenerateTile();
 			}
+
+			swapper.SetSideSize(cellSize);
+			swapper.HideSides();
 		}
 
 	}

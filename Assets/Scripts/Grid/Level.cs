@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Levels/Level")]
 public class Level : ScriptableObject
 {
-	[SerializeField] private int length = 5;
-	public int Length => length;
 	[SerializeField] private int width = 5;
 	public int Width => width;
+	[SerializeField] private int height = 5;
+	public int Height => height;
 
 	public TileGridCellData[] cells;
 
