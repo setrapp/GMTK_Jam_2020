@@ -10,7 +10,7 @@ public class ShapeTileData : TileData
 		Shape2 = 2
 	}
 
-	private TileShape shape = TileShape.Shape0;
+	[SerializeField] private TileShape shape = TileShape.Shape0;
 
 	public TileShape Shape
 	{

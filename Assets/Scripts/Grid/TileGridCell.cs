@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Grid;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class TileGridCell : MonoBehaviour
@@ -271,24 +272,10 @@ public class TileGridCell : MonoBehaviour
 		{
 			if (neighbor != null && neighbor.Tile != null)
 			{
-				if (Tile.IsMatch(neighbor.Tile))
+				if (isValidMatch(neighbor))
 				{
 					matches++;
-					if (neighbor.OppositeNeighborMatches(this))
-					{
-						matches++;
-					}
-				}
-			}
-		}
-
-		foreach (var neighbor in NonCardinalNeighbors())
-		{
-			if (neighbor != null && neighbor.Tile != null)
-			{
-				if (Tile.IsMatch(neighbor.Tile))
-				{
-					matches++;
+					matches += neighbor.OtherNeighborMatches(this);
 				}
 			}
 		}
@@ -296,9 +283,9 @@ public class TileGridCell : MonoBehaviour
 		return matches > 1;
 	}
 
-	public bool OppositeNeighborMatches(TileGridCell other)
+	public int OtherNeighborMatches(TileGridCell other)
 	{
-		if (other == null || other.Data == null || Data == null || other.Tile == null)
+		/*if (other == null || other.Data == null || Data == null || other.Tile == null)
 		{
 			return false;
 		}
@@ -313,6 +300,32 @@ public class TileGridCell : MonoBehaviour
 		if (oppositeNeighbor != null && oppositeNeighbor.Tile != null)
 		{
 			return other.Tile.IsMatch(oppositeNeighbor.Tile);
+		}*/
+
+		if (other == null)
+		{
+			return 0;
+		}
+
+		int otherMatches = 0;
+		foreach (var neighbor in CardinalNeighbors())
+		{
+			if (other.isValidMatch(neighbor))
+			{
+				otherMatches++;
+			}
+		}
+
+		return otherMatches;
+	}
+
+	private bool isValidMatch(TileGridCell other)
+	{
+		if ((other != null && other != this)
+		    && (other.Tile != null && other.TileReady)
+		    && (Tile != null && TileReady))
+		{
+			return other.Tile.IsMatch(Tile);
 		}
 
 		return false;
@@ -350,7 +363,7 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in AllNeighbors())
 		{
-			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Grid.DetonateCells[0].Tile))
+			if (neighbor != null && neighbor.Tile != null)
 			{
 				if (!Grid.BurnCells.Contains(neighbor))
 				{
@@ -358,6 +371,11 @@ public class TileGridCell : MonoBehaviour
 					Grid.BurnCells.Add(neighbor);
 				}
 			}
+		}
+
+		foreach (var neighbor in recurseNeighbors)
+		{
+			neighbor.BuildDestructionLists(false);
 		}
 	}
 
@@ -385,7 +403,7 @@ public class TileGridCell : MonoBehaviour
 
 	}
 
-	private IEnumerator RebindAnim()
+	private IEnumerator RebindAnim()//todo this does not seem to work
 	{
 		if (anim != null)
 		{
