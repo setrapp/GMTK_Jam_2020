@@ -13,23 +13,6 @@ public class TileSwapper : MonoBehaviour
 	public void SetSideSize(float tileSize)
 	{
 		((RectTransform) transform).sizeDelta = new Vector2(tileSize, tileSize);
-
-		/*((RectTransform) swapUp.transform).sizeDelta = new Vector2(
-			tileSize * longFactor,
-			tileSize * shortFactor);
-
-		((RectTransform) swapRight.transform).sizeDelta = new Vector2(
-			tileSize * shortFactor,
-			tileSize * longFactor);
-
-		((RectTransform) swapDown.transform).sizeDelta = new Vector2(
-			tileSize * longFactor,
-			tileSize * shortFactor);
-
-		((RectTransform) swapLeft.transform).sizeDelta = new Vector2(
-			tileSize * shortFactor,
-			tileSize * longFactor);*/
-
 	}
 
 	public void HideSides()

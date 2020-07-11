@@ -98,8 +98,8 @@ public class Tile : MonoBehaviour
 		}
 		else
 		{
-			bool showUp = GridCell.Data.y < GridCell.Grid.GridHeight;
-			bool showRight = GridCell.Data.x < GridCell.Grid.GridWidth;
+			bool showUp = GridCell.Data.y < GridCell.Grid.GridHeight - 1;
+			bool showRight = GridCell.Data.x < GridCell.Grid.GridWidth - 1;
 			bool showDown = GridCell.Data.y > 0;
 			bool showLeft = GridCell.Data.x > 0;
 
