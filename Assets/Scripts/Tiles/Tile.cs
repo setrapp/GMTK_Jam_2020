@@ -155,4 +155,14 @@ public class Tile : MonoBehaviour
 		// Matching only requires one tile succeed.
 		return Data.IsBurnMatch(other.Data) || other.Data.IsBurnMatch(Data);
 	}
+
+	public void Detonate()
+	{
+		data.Detonate(this);
+	}
+
+	public void Burn()
+	{
+		data.Burn(this);
+	}
 }

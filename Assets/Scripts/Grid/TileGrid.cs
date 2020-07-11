@@ -173,7 +173,22 @@ namespace Grid
 
 			ChooseSwapTarget(null);
 
+			DetonateAndBurn();
+
 			return true;
+		}
+
+		public void DetonateAndBurn()
+		{
+			foreach (var cell in DetonateCells)
+			{
+				cell.Tile.Detonate();
+			}
+
+			foreach (var cell in BurnCells)
+			{
+				cell.Tile.Burn();
+			}
 		}
 	}
 }

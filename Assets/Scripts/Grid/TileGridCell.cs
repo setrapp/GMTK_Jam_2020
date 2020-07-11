@@ -333,7 +333,7 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in CardinalNeighbors())
 		{
-			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Tile))
+			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Grid.DetonateCells[0].Tile))
 			{
 				if (!Grid.DetonateCells.Contains(neighbor))
 				{
@@ -345,7 +345,7 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in AllNeighbors())
 		{
-			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Tile))
+			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Grid.DetonateCells[0].Tile))
 			{
 				if (!Grid.BurnCells.Contains(neighbor))
 				{

@@ -20,7 +20,7 @@ public class ShapeTileData : TileData
 
 	public override bool IsMatch(TileData other)
 	{
-		if (other == null)
+		if (other != null)
 		{
 			var otherShape = other as ShapeTileData;
 			if (otherShape != null)
