@@ -337,7 +337,6 @@ public class TileGridCell : MonoBehaviour
 
 		if (firstCell)
 		{
-			clearBuildLists();
 			Grid.DetonateCells.Add(this);
 		}
 
@@ -381,30 +380,6 @@ public class TileGridCell : MonoBehaviour
 		{
 			neighbor.BuildDestructionLists(false);
 		}
-	}
-
-	private void clearBuildLists()
-	{
-		if (Grid != null)
-		{
-			if (Grid.DetonateCells == null)
-			{
-				Grid.DetonateCells = new List<TileGridCell>();
-			}
-			if (Grid.BurnCells == null)
-			{
-				Grid.BurnCells = new List<TileGridCell>();
-			}
-			if (Grid.DetonateLaterCells == null)
-			{
-				Grid.DetonateLaterCells = new List<TileGridCell>();
-			}
-		}
-
-		Grid.DetonateCells.Clear();
-		Grid.BurnCells.Clear();
-		Grid.DetonateLaterCells.Clear();
-
 	}
 
 	private IEnumerator RebindAnim()//todo this does not seem to work

@@ -20,6 +20,7 @@ namespace Grid
 		[SerializeField] private TileGridCell cellPrefab = null;
 		[SerializeField] private RectTransform container = null;
 		[SerializeField] private TileSwapper swapper = null;
+		[SerializeField] private bool ignoreBurnInEditor = false;
 		public TileSwapper Swapper => swapper;
 
 		private TileGridCell selectedCell = null;
@@ -174,6 +175,8 @@ namespace Grid
 				? selectedCell.Tile.IsMatch(other.Tile)
 				: false;
 
+			clearBuildLists();
+
 			selectedCell.CheckForTriplet();
 			if (!matching)
 			{
@@ -196,8 +199,38 @@ namespace Grid
 
 			foreach (var cell in BurnCells)
 			{
-				cell.Tile.Burn();
+				bool burn = true;
+#if UNITY_EDITOR
+				burn = !ignoreBurnInEditor;
+#endif
+				if (burn)
+				{
+					cell.Tile.Burn();
+				}
 			}
+		}
+
+		private void clearBuildLists()
+		{
+			if (DetonateCells == null)
+			{
+				DetonateCells = new List<TileGridCell>();
+			}
+
+			if (BurnCells == null)
+			{
+				BurnCells = new List<TileGridCell>();
+			}
+
+			if (DetonateLaterCells == null)
+			{
+				DetonateLaterCells = new List<TileGridCell>();
+			}
+
+			DetonateCells.Clear();
+			BurnCells.Clear();
+			DetonateLaterCells.Clear();
+
 		}
 	}
 }

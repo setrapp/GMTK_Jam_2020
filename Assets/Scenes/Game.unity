@@ -527,6 +527,11 @@ PrefabInstance:
       propertyPath: swapper
       value: 
       objectReference: {fileID: 1845185447}
+    - target: {fileID: 3784010967301244568, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
+        type: 3}
+      propertyPath: ignoreBurnInEditor
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3990090059233779363, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_Name
