@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Grid
@@ -20,7 +21,7 @@ namespace Grid
 		[SerializeField] private TileSwapper swapper = null;
 		public TileSwapper Swapper => swapper;
 
-		public TileGridCell selectedCell = null;
+		private TileGridCell selectedCell = null;
 
 		public Tile TilePrefab => tilePrefab;
 
@@ -101,5 +102,60 @@ namespace Grid
 			swapper.HideSides();
 		}
 
+		public TileGridCell Cell(uint x, uint y)
+		{
+			return cells[x, y];
+		}
+
+		public bool CanBeginSwap(TileGridCell cell)
+		{
+			if (cell != null)
+			{
+				if (selectedCell == null)
+				{
+					return true;
+				}
+
+				// If the cell is a cardinal neighbor, we'll want to swap with it, not let it take our swap.
+				if (selectedCell.IsNeighbor(cell, true))
+				{
+					return false;
+				}
+
+				// The cell is not a relevant neighbor, so it can take the swap.
+				return true;
+			}
+
+			return false;
+		}
+
+		public void ChooseSwapTarget(TileGridCell cell)
+		{
+			if (selectedCell != null)
+			{
+				selectedCell.UnmakeSwapTarget();
+			}
+
+			selectedCell = cell;
+		}
+
+		public bool SwapTileWithSelected(TileGridCell other)
+		{
+			if (other == null || other == selectedCell || !other.TileReady || !selectedCell.TileReady)
+			{
+				return false;
+			}
+
+			var tempTile = other.Tile;
+			other.Tile = selectedCell.Tile;
+			selectedCell.Tile = tempTile;
+
+			selectedCell.Tile.MoveToGridCell();
+			other.Tile.MoveToGridCell();
+
+			ChooseSwapTarget(null);
+
+			return true;
+		}
 	}
 }

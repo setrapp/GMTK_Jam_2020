@@ -6,13 +6,16 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-	[SerializeField] private TileData data;
-	[SerializeField] private Image image;
+	[SerializeField] private TileData data = null;
+	[SerializeField] private Image image = null;
 	public TileGridCell GridCell = null;
+	[SerializeField] private Button button = null;
 
 
 	[SerializeField] private Animator anim = null;
 	private const string swapReady = "SwapReady";
+
+	public bool LockedIn = true;
 
 	public TileData Data
 	{
@@ -26,11 +29,13 @@ public class Tile : MonoBehaviour
 				{
 					image.sprite = data.Image;
 					image.gameObject.SetActive(true);
+					button.interactable = data.Swappable;
 				}
 				else
 				{
 					image.sprite = null;
 					image.gameObject.SetActive(false);
+					button.interactable = false;
 				}
 			}
 		}
@@ -44,23 +49,40 @@ public class Tile : MonoBehaviour
 		}
 	}
 
-	public void Event_OnClick()
+	public void Event_Select()
 	{
-		if (GridCell != null)
+		if (Data != null && Data.Swappable && LockedIn)
 		{
-			//if (GridCell.Grid.selectedCell == null)
+			if (GridCell != null)
 			{
-				GridCell.Grid.selectedCell = GridCell;
-				if (anim != null)
+				if (GridCell.CanBeginSwap())
 				{
-					anim.SetBool(swapReady, true);
+					GridCell.MakeSwapTarget();
+					if (anim != null)
+					{
+						anim.SetBool(swapReady, true);
+					}
+					else
+					{
+						Event_ShowSwapIndictors(true);
+					}
 				}
 				else
 				{
-					Event_ShowSwapIndictors(true);
+					GridCell.SwapTile();
 				}
 			}
 		}
+	}
+
+	public void Event_Unselect()
+	{
+		if (anim != null)
+		{
+			anim.SetBool(swapReady, false);
+		}
+
+		Event_ShowSwapIndictors(false);
 	}
 
 	public void Event_ShowSwapIndictors(bool show)
@@ -84,5 +106,29 @@ public class Tile : MonoBehaviour
 			GridCell.Grid.Swapper.transform.position = transform.position;
 			GridCell.Grid.Swapper.ShowSides(showUp, showRight, showDown, showLeft);
 		}
+	}
+
+	public void MoveToGridCell()
+	{
+		if (GridCell == null)
+		{
+			return;
+		}
+
+		// TODO Do this over time
+		transform.SetParent(GridCell.transform);
+		transform.localPosition = Vector3.zero;
+	}
+
+	public void FallToGridCell()
+	{
+		if (GridCell == null)
+		{
+			return;
+		}
+
+		// TODO Fall like gravity
+		transform.SetParent(GridCell.transform);
+		transform.localPosition = Vector3.zero;
 	}
 }

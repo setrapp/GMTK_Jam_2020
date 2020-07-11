@@ -7,6 +7,8 @@ public abstract class TileData : ScriptableObject
 	[SerializeField] private Sprite image = null;
 	public Sprite Image => image;
 
+	public bool Swappable => true;
+
 	public abstract bool IsMatch(Tile other);
 
 	public virtual void Detonate(Tile target)

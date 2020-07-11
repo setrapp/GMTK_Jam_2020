@@ -53,7 +53,9 @@ MonoBehaviour:
   data: {fileID: 0}
   image: {fileID: 1740791740599333968}
   GridCell: {fileID: 0}
+  button: {fileID: 4132626072998795945}
   anim: {fileID: 0}
+  LockedIn: 1
 --- !u!114 &4132626072998795945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +100,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7918821726559786259}
-        m_MethodName: Event_OnClick
+        m_MethodName: Event_Select
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
