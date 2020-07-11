@@ -345,12 +345,26 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in CardinalNeighbors())
 		{
+			bool burn = true;
 			if (neighbor != null && neighbor.IsValidMatch(Grid.DetonateCells[0]))
 			{
-				if (MatchInLine(neighbor) && !Grid.DetonateCells.Contains(neighbor))
+				if (MatchInLine(neighbor))
 				{
-					Grid.DetonateCells.Add(neighbor);
-					recurseNeighbors.Add(neighbor);
+					burn = false;
+					if (!Grid.DetonateCells.Contains(neighbor))
+					{
+						Grid.DetonateCells.Add(neighbor);
+						recurseNeighbors.Add(neighbor);
+					}
+				}
+
+			}
+
+			if (burn)
+			{
+				if (!Grid.BurnCells.Contains(neighbor))
+				{
+					Grid.BurnCells.Add(neighbor);
 				}
 			}
 		}
@@ -359,11 +373,7 @@ public class TileGridCell : MonoBehaviour
 		{
 			if (neighbor != null && neighbor.Tile != null)
 			{
-				if (!Grid.BurnCells.Contains(neighbor))
-				{
-					// TODO handle cells that we we'll want to detonate later... gotta figure out a clean way to do that.
-					Grid.BurnCells.Add(neighbor);
-				}
+
 			}
 		}
 

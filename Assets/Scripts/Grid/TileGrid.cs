@@ -196,7 +196,7 @@ namespace Grid
 
 			foreach (var cell in BurnCells)
 			{
-				//cell.Tile.Burn();
+				cell.Tile.Burn();
 			}
 		}
 	}
