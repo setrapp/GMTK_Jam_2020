@@ -169,12 +169,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -512,6 +512,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 263803520}
     m_Modifications:
+    - target: {fileID: 3048890753952222632, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3048890753952222632, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3784010967301244568, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: swapper
@@ -580,7 +590,7 @@ PrefabInstance:
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 4.1000366
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
@@ -590,32 +600,32 @@ PrefabInstance:
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 300
+      value: -922
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 300
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5395189345696639595, guid: 71ad79ef327ed4ad08d9492c4cd7374a,
         type: 3}
@@ -627,7 +637,8 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2045201339963241816, guid: 71ad79ef327ed4ad08d9492c4cd7374a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71ad79ef327ed4ad08d9492c4cd7374a, type: 3}
 --- !u!224 &3036059444003269981 stripped
 RectTransform:

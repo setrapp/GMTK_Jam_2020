@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -40,6 +41,13 @@ namespace Grid
 
 		public void GenerateGrid(Level data)
 		{
+			StartCoroutine(generateGrid(data));
+		}
+
+		private IEnumerator generateGrid(Level data)
+		{
+			var rectTransform = transform as RectTransform;
+
 			if (data != null)
 			{
 				SetupData = data;
@@ -48,11 +56,10 @@ namespace Grid
 			var width = SetupData.Width;
 			var height = SetupData.Height;
 
-			var rectTransform = transform as RectTransform;
-			container.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rectTransform.sizeDelta.y * ((float)height / width));
+			container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float)height / width));
 			float cellSize = container.sizeDelta.x / width;
-			float startX = (-rectTransform.sizeDelta.x / 2) + (cellSize / 2);
-			float startY = (-rectTransform.sizeDelta.y / 2) + (cellSize / 2);
+			float startX = (-rectTransform.rect.width / 2) + (cellSize / 2);
+			float startY = (-rectTransform.rect.height / 2) + (cellSize / 2);
 
 			// Fill grid with new cells.
 			cells = new TileGridCell[width, height];
@@ -103,6 +110,8 @@ namespace Grid
 
 			swapper.SetSideSize(cellSize);
 			swapper.HideSides();
+
+			yield break;
 		}
 
 		public TileGridCell Cell(int x, int y)
