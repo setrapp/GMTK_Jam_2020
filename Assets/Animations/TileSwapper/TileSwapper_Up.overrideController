@@ -8,4 +8,6 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: TileSwapper_Up
   m_Controller: {fileID: 9100000, guid: 0d9667e015191e54e8aeabad7d65815d, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 83670899520686c4c9afa3e7bdf0623d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 710cb0841d88bd443b87858bd64476c0, type: 2}
