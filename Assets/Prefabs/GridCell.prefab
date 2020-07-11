@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5081143863408412053}
   - component: {fileID: 7256243768293119189}
   - component: {fileID: 8784018219572317964}
+  - component: {fileID: 8801645189938623080}
   m_Layer: 0
   m_Name: GridCell
   m_TagString: Untagged
@@ -91,3 +92,22 @@ MonoBehaviour:
     tileData: {fileID: 0}
     x: 0
     y: 0
+--- !u!95 &8801645189938623080
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394654946711174082}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e6c3e7b94bce6643b96c0849f57f154, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
