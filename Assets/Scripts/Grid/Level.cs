@@ -10,11 +10,11 @@ public class Level : ScriptableObject
 	[SerializeField] private int height = 5;
 	public int Height => height;
 
-	public TileGridCellData[] cells;
+	public LevelTileGridCellData[] cells;
 
 	[SerializeField] RandomTileData[] allowedRandomTiles = null;
 
-	public IEnumerable<TileGridCellData> GetCells()
+	public IEnumerable<LevelTileGridCellData> GetCells()
 	{
 		foreach (var cell in cells)
 		{
@@ -56,9 +56,14 @@ public class Level : ScriptableObject
 [System.Serializable]
 public class TileGridCellData
 {
-	public TileData tileData;
 	public int x;
 	public int y;
+}
+
+[System.Serializable]
+public class LevelTileGridCellData : TileGridCellData
+{
+	public TileData tileData;
 }
 
 [System.Serializable]

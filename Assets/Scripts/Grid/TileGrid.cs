@@ -64,6 +64,7 @@ namespace Grid
 
 			// Fill grid with new cells.
 			cells = new TileGridCell[width, height];
+			var predefinedTiles = new TileData[width, height];
 			for (int i = 0; i < width; i++)
 			{
 				for (int j = 0; j < height; j++)
@@ -73,6 +74,8 @@ namespace Grid
 					((RectTransform)cells[i, j].transform).sizeDelta = new Vector2(cellSize, cellSize);
 					((RectTransform) cells[i, j].transform).anchoredPosition =
 						new Vector2(startX + (cellSize * i), startY + (cellSize * j));
+
+					predefinedTiles[i, j] = null;
 				}
 			}
 
@@ -81,7 +84,13 @@ namespace Grid
 			{
 				if (cellData.x < width && cellData.y < height)
 				{
-					cells[cellData.x, cellData.y].Data = cellData;
+					cells[cellData.x, cellData.y].Data = new TileGridCellData()
+					{
+						x = cellData.x,
+						y = cellData.y
+					};
+
+					predefinedTiles[cellData.x, cellData.y] = cellData.tileData;
 				}
 			}
 
@@ -91,22 +100,26 @@ namespace Grid
 				for (int j = 0; j < height; j++)
 				{
 					var cell = cells[i, j];
-					if (cell.Data == null || cell.Data.tileData == null)
+					if (cell.Data == null || predefinedTiles[i, j] == null)
 					{
 						cell.Data = new TileGridCellData()
 						{
-							tileData = setupData.GetRandomTileData(),
 							x = i,
 							y = j
 						};
+						predefinedTiles[i, j] = setupData.GetRandomTileData();
 					}
 				}
 			}
 
 			// Actually build the tiles for all this data!
-			foreach (var cell in cells)
+			for (int i = 0; i < width; i++)
 			{
-				cell.GenerateTile();
+				for (int j = 0; j < height; j++)
+				{
+					var cell = cells[i, j];
+					cell.GenerateTile(predefinedTiles[i, j]);
+				}
 			}
 
 			swapper.SetSideSize(cellSize);
@@ -171,26 +184,30 @@ namespace Grid
 			selectedCell.Tile.MoveToGridCell();
 			other.Tile.MoveToGridCell();
 
-			bool matching = selectedCell.Tile != null
-				? selectedCell.Tile.IsMatch(other.Tile)
-				: false;
-
 			clearBuildLists();
 
 			selectedCell.CheckForTriplet();
-			if (!matching)
-			{
-				other.CheckForTriplet();
-			}
+			other.CheckForTriplet();
 
 			ChooseSwapTarget(null);
 
-			DetonateAndBurn();
+			StartCoroutine(DetonateAndBurn());
 
 			return true;
 		}
 
-		public void DetonateAndBurn()
+		public TileGridCell GetCellBelow(TileGridCell cell)
+		{
+			if (cell == null || cell.Data == null)
+			{
+				return null;
+			}
+
+			//TODO Handle rotation;
+			return Cell(cell.Data.x, cell.Data.y - 1);
+		}
+
+		public IEnumerator DetonateAndBurn()
 		{
 			foreach (var cell in DetonateCells)
 			{
@@ -206,6 +223,16 @@ namespace Grid
 				if (burn)
 				{
 					cell.Tile.Burn();
+				}
+			}
+
+			yield return null;
+
+			foreach (var cell in cells)
+			{
+				if (cell != null)
+				{
+					cell.HandleGridChange();
 				}
 			}
 		}
@@ -230,7 +257,18 @@ namespace Grid
 			DetonateCells.Clear();
 			BurnCells.Clear();
 			DetonateLaterCells.Clear();
+		}
 
+		public void PopulateTopCells()
+		{
+			// TODO Handle rotation
+			for (int i = 0; i < GridWidth; i++)
+			{
+				if (Cell(i, GridHeight - 1).Tile == null)
+				{
+
+				}
+			}
 		}
 	}
 }
