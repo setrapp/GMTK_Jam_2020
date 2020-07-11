@@ -6,8 +6,8 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FXBurn_Triangle2
+  m_Name: FXDetonate_Triangle1
   m_Controller: {fileID: 9100000, guid: 926ed9c780eaeb34c91ef0024a0f2184, type: 2}
   m_Clips:
   - m_OriginalClip: {fileID: 7400000, guid: fc41effef424efd428ce77b7c7eeda8b, type: 2}
-    m_OverrideClip: {fileID: 7400000, guid: 48b535d6900433749ab1c7ebb5617c12, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0e61cff81626f6b4cab98c46362767d8, type: 2}
