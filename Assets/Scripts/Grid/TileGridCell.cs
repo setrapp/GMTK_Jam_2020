@@ -9,6 +9,7 @@ public class TileGridCell : MonoBehaviour
 {
 	[SerializeField] private TileGridCellData data = null;
 	private TileGrid grid = null;
+	[SerializeField] private Animator anim;
 
 	public TileGrid Grid
 	{
@@ -34,6 +35,10 @@ public class TileGridCell : MonoBehaviour
 				tile = value;
 				data.tileData = tile.Data;
 				tile.GridCell = this;
+				if (anim != null)
+				{
+					anim.Rebind();
+				}
 			}
 		}
 	}
