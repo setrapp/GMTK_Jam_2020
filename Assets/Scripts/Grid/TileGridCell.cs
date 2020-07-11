@@ -272,20 +272,19 @@ public class TileGridCell : MonoBehaviour
 		{
 			if (neighbor != null && neighbor.Tile != null)
 			{
-				if (isValidMatch(neighbor))
+				if (IsValidMatch(neighbor))
 				{
-					matches++;
-					matches += neighbor.OtherNeighborMatches(this);
+					return neighbor.MatchInLine(this);
 				}
 			}
 		}
 
-		return matches > 1;
+		return false;
 	}
 
-	public int OtherNeighborMatches(TileGridCell other)
+	public bool MatchInLine(TileGridCell other)
 	{
-		/*if (other == null || other.Data == null || Data == null || other.Tile == null)
+		if (other == this || other == null)
 		{
 			return false;
 		}
@@ -293,33 +292,28 @@ public class TileGridCell : MonoBehaviour
 		int xDiff = Data.x - other.Data.x;
 		int yDiff = Data.y - other.Data.y;
 
-		int oppositeX = Data.x + xDiff;
-		int oppositeY = Data.y + yDiff;
-
-		var oppositeNeighbor = Grid.Cell(oppositeX, oppositeY);
-		if (oppositeNeighbor != null && oppositeNeighbor.Tile != null)
+		var oppositeNeighbor = Grid.Cell(Data.x + xDiff, Data.y + yDiff);
+		if (oppositeNeighbor != null)
 		{
-			return other.Tile.IsMatch(oppositeNeighbor.Tile);
-		}*/
-
-		if (other == null)
-		{
-			return 0;
-		}
-
-		int otherMatches = 0;
-		foreach (var neighbor in CardinalNeighbors())
-		{
-			if (other.isValidMatch(neighbor))
+			if (oppositeNeighbor.IsValidMatch(other))
 			{
-				otherMatches++;
+				return true;
 			}
 		}
 
-		return otherMatches;
+		var otherOppositeNeighbor = Grid.Cell(other.Data.x - xDiff, other.Data.y - yDiff);
+		if (otherOppositeNeighbor)
+		{
+			if (otherOppositeNeighbor.IsValidMatch(this))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
-	private bool isValidMatch(TileGridCell other)
+	private bool IsValidMatch(TileGridCell other)
 	{
 		if ((other != null && other != this)
 		    && (other.Tile != null && other.TileReady)
@@ -351,9 +345,9 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in CardinalNeighbors())
 		{
-			if (neighbor != null && neighbor.Tile != null && neighbor.Tile.IsMatch(Grid.DetonateCells[0].Tile))
+			if (neighbor != null && neighbor.IsValidMatch(Grid.DetonateCells[0]))
 			{
-				if (!Grid.DetonateCells.Contains(neighbor))
+				if (MatchInLine(neighbor) && !Grid.DetonateCells.Contains(neighbor))
 				{
 					Grid.DetonateCells.Add(neighbor);
 					recurseNeighbors.Add(neighbor);
