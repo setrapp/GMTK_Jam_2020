@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: Accelerant
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 6c6b4c6dfa3d62843b67847fe6b36be5, type: 3}
-  detonateFX: []
-  burnFX: []
+  framesPerSprite: 1
+  detonateFX:
+  - {fileID: 2477061752162164304, guid: 94d81d13cbb1be7489c4a0f21bcb8c2d, type: 3}
+  - {fileID: 2477061752162164304, guid: 22464b588267742428f0fc408878beee, type: 3}
+  - {fileID: 2477061752162164304, guid: fffcc215316e3fe428c9b5e7b09e3138, type: 3}
+  burnFX:
+  - {fileID: 2477061752162164304, guid: 41d2cbac975540f4a891fe841f8cfa05, type: 3}
+  - {fileID: 2477061752162164304, guid: 8e37d944e9099a54f874c9b2fd5a5685, type: 3}
+  - {fileID: 2477061752162164304, guid: 0d8baaf8852c04842962834553ea4569, type: 3}
   DestroyOnBurn: 0
   detonateAfter: 0.3

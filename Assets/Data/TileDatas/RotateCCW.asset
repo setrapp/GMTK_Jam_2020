@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2800000, guid: 03e3b6ca538414aa6af4cc58f6fe29c4, type: 3}
   framesPerSprite: -1
-  detonateFX: []
-  burnFX: []
+  detonateFX:
+  - {fileID: 2477061752162164304, guid: 41d2cbac975540f4a891fe841f8cfa05, type: 3}
+  - {fileID: 2477061752162164304, guid: 8e37d944e9099a54f874c9b2fd5a5685, type: 3}
+  - {fileID: 2477061752162164304, guid: 0d8baaf8852c04842962834553ea4569, type: 3}
+  burnFX:
+  - {fileID: 2477061752162164304, guid: 184a69668d445c146b729dd51147efff, type: 3}
+  - {fileID: 2477061752162164304, guid: 2d7b6f8c63840ef40a458d4b4a5ead8c, type: 3}
+  - {fileID: 2477061752162164304, guid: 5106c494a4461104a91c990f6446ffdb, type: 3}
   DestroyOnBurn: 1
   rotateDirection: 1
