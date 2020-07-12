@@ -20,6 +20,8 @@ public class AccelerantTileData : TileData
 				return pin.Ticking;
 			}
 		}
+
+		return false;
 	}
 
 	protected override void burn(Tile target)
