@@ -258,7 +258,7 @@ public class Tile : MonoBehaviour
 	public void removeFromCell()
 	{
 		LockedIn = false;
-		transform.parent = GridCell.Grid.orphanTileContainer;
+		transform.SetParent(GridCell.Grid.orphanTileContainer);
 
 		if (GridCell != null)
 		{
