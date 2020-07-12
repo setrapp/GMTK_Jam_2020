@@ -3,8 +3,8 @@
 [CreateAssetMenu(fileName = "AccelerantTileType", menuName = "ScriptableObjects/TileTypes/AccelerantTileData")]
 public class AccelerantTileData : TileData
 {
-	[SerializeField] private float detonateDelay = 0;
-	public float DetonateDelay => detonateDelay;
+	[SerializeField] private float detonateAfter = 1;
+	public float DetonateAfter => detonateAfter;
 
 	public override bool IsMatch(TileData other, Tile targetTile)
 	{
@@ -33,6 +33,8 @@ public class AccelerantTileData : TileData
 			{
 				accelerantPin = target.gameObject.AddComponent<AccelerantPin>();
 			}
+			accelerantPin.SetData(this);
+			accelerantPin.ResetTime();
 		}
 	}
 }

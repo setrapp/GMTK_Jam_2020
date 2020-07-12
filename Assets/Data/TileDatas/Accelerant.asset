@@ -16,4 +16,4 @@ MonoBehaviour:
   detonateFX: []
   burnFX: []
   DestroyOnBurn: 0
-  detonateDelay: 0
+  detonateAfter: 0.3
