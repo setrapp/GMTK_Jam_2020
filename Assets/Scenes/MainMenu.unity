@@ -1232,7 +1232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 11400000, guid: 44a2bee0ae5264708a91954d1c159837, type: 2}
-  listItem: {fileID: 0}
+  listItem: {fileID: 4963361240510072362, guid: abf861689b9ab402e9f77fa1ac193baa,
+    type: 3}
   container: {fileID: 1703563547}
   gameScene: Game
 --- !u!1 &1703563546

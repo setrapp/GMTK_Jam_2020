@@ -14,6 +14,8 @@ public class GameMenu : Menu
 
 	[SerializeField] private string nextLevelScene = null;
 
+	private bool won = false;
+
 	protected override void Awake()
 	{
 		instance = this;
@@ -22,13 +24,22 @@ public class GameMenu : Menu
 
 	public void Win()
 	{
-		//TODO Do something better
-		onWin.Invoke();
+		if (!won)
+		{
+			if (levelManager.UnlockedLevel == levelManager.CurrentLevel)
+			{
+				levelManager.CurrentLevel++;
+				levelManager.UnlockCurrentLevel();
+			}
+
+			//TODO Do something better
+			onWin.Invoke();
+			won = true;
+		}
 	}
 
 	public void Event_NextLevel()
 	{
-		levelManager.CurrentLevel++;
 		SceneManager.LoadScene(nextLevelScene);
 	}
 

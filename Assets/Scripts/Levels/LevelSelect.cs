@@ -18,9 +18,9 @@ public class LevelSelect : MonoBehaviour
 
 	void Awake()
 	{
-		for (int i = 0; i < levelManager.Levels.Length; i++)
+		int i = 0;
+		foreach (var level in levelManager.UnlockedLevels())
 		{
-			var level = levelManager.Levels[i];
 			var item = Instantiate(listItem, container).GetComponent<LevelSelectItem>();
 			item.levelSelect = this;
 			item.AttachLevel(level, i);
@@ -29,9 +29,11 @@ public class LevelSelect : MonoBehaviour
 			{
 				defaultItem = listItem;
 			}
+
+			i++;
 		}
 
-		StartCoroutine(pickDefault());
+		//StartCoroutine(pickDefault());
 	}
 
 	IEnumerator pickDefault()
