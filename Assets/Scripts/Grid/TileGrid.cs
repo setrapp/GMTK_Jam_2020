@@ -189,11 +189,50 @@ namespace Grid
 			selectedCell = cell;
 		}
 
-		public bool SwapTileWithSelected(TileGridCell other)
+		public bool CanSwapTileWithSelected(TileGridCell other)
 		{
 			if (other == null || other == selectedCell || !other.TileReady || !selectedCell.TileReady)
 			{
 				return false;
+			}
+
+			return true;
+		}
+
+		public void PrepareSwapTileWithSelected(TileGridCell other)
+		{
+			var up = "MoveUp";
+			var right = "MoveRight";
+			var down = "MoveDown";
+			var left = "MoveLeft";
+
+			if (other.Data.x > selectedCell.Data.x)
+			{
+				other.AnimateMove(left);
+				selectedCell.AnimateMove(right);
+			}
+			else if (other.Data.x < selectedCell.Data.x)
+			{
+				other.AnimateMove(right);
+				selectedCell.AnimateMove(left);
+			}
+			else if (other.Data.y > selectedCell.Data.y)
+			{
+				other.AnimateMove(down);
+				selectedCell.AnimateMove(up);
+			}
+			else if (other.Data.y < selectedCell.Data.y)
+			{
+				other.AnimateMove(up);
+				selectedCell.AnimateMove(down);
+			}
+		}
+
+		public void SwapTileWithSelected(TileGridCell other)
+		{
+			if (other == selectedCell || selectedCell == null)
+			{
+				return;
 			}
 
 			var tempTile = other.Tile;
@@ -210,7 +249,7 @@ namespace Grid
 			StartCoroutine(DetonateAndBurn(other));
 
 			ChooseSwapTarget(null);
-			return true;
+			Swapper.HideSides();
 		}
 
 		public TileGridCell GetCellBelow(TileGridCell cell)

@@ -130,19 +130,7 @@ public class Tile : MonoBehaviour
 		}
 
 		// TODO Do this over time
-		transform.SetParent(GridCell.transform);
-		transform.localPosition = Vector3.zero;
-	}
-
-	public void FallToGridCell()
-	{
-		if (GridCell == null)
-		{
-			return;
-		}
-
-		// TODO Fall like gravity
-		transform.SetParent(GridCell.transform);
+		transform.SetParent(GridCell.tileContainer.transform);
 		transform.localPosition = Vector3.zero;
 	}
 

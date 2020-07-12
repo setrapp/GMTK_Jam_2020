@@ -14,6 +14,7 @@ public class TileGridCell : MonoBehaviour
 	[SerializeField] private Animator anim;
 
 	[SerializeField] private GameObject fxRoot = null;
+	[SerializeField] public GameObject tileContainer = null;
 
 	public TileGrid Grid
 	{
@@ -210,8 +211,7 @@ public class TileGridCell : MonoBehaviour
 	{
 		if (tile == null)
 		{
-			tile = Instantiate(Grid.TilePrefab, transform).GetComponent<Tile>();
-			tile.transform.SetSiblingIndex(0);
+			tile = Instantiate(Grid.TilePrefab, tileContainer.transform).GetComponent<Tile>();
 		}
 
 		tile.GridCell = this;
@@ -247,6 +247,33 @@ public class TileGridCell : MonoBehaviour
 	}
 
 	public void SwapTile()
+	{
+		if (Grid.CanSwapTileWithSelected(this))
+		{
+			if (anim != null)
+			{
+				Grid.PrepareSwapTileWithSelected(this);
+			}
+			else
+			{
+				Event_FinishSwap();
+			}
+		}
+	}
+
+	public void AnimateMove(string trigger)
+	{
+		if (anim != null)
+		{
+			anim.SetTrigger(trigger);
+		}
+		else
+		{
+			Event_FinishSwap();
+		}
+	}
+
+	public void Event_FinishSwap()
 	{
 		Grid.SwapTileWithSelected(this);
 	}
@@ -357,7 +384,6 @@ public class TileGridCell : MonoBehaviour
 			{
 				if (MatchInLine(neighbor))
 				{
-					//burn = false;
 					if (Grid.PrepareToDetonate(neighbor, order + 1, starter))
 					{
 						recurseNeighbors.Add(neighbor);
@@ -365,14 +391,6 @@ public class TileGridCell : MonoBehaviour
 				}
 
 			}
-
-			/*if (burn)
-			{
-				if (!Grid.BurnCells.Contains(neighbor))
-				{
-					Grid.BurnCells.Add(neighbor);
-				}
-			}*/
 		}
 
 		foreach (var neighbor in AllNeighbors())
