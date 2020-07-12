@@ -28,12 +28,14 @@ public class AudioManager : MonoBehaviour
     }
     public void PlaySelectedAudio()
     {
-        //      float randPitch = Random.Range(10, 20) * 0.2f;
-        //    hightlightAudio.pitch = randPitch;
+            float randPitch = Random.Range(0.9f, 1.2f);
+        selectedAudio.pitch = randPitch;
         selectedAudio.PlayOneShot(SelectedClip);
     }
     public void PlaySwapAudio()
     {
+      //  float randPitch = Random.Range(0.9f, 1.2f);
+      //  swapAudio.pitch = randPitch;
         swapAudio.PlayOneShot(SwapedClip);
     }
 
