@@ -276,12 +276,13 @@ namespace Grid
 			{
 				List<DetonateCellData> detonateData = DetonateCells[starter];
 
-				var toDetonate = new List<TileGridCell>();
 				int order = 0;
 				bool done = false;
 
 				while (!done)
 				{
+					var toDetonate = new List<TileGridCell>();
+
 					for (int i = 0; i < detonateData.Count; i++)
 					{
 						// TODO Remove detonatedCells from list (make sure this doesn't break list checks when adding news (like weird loops)

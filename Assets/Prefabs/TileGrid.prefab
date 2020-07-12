@@ -361,9 +361,8 @@ MonoBehaviour:
   container: {fileID: 3048890753952222632}
   swapper: {fileID: 0}
   ignoreBurnInEditor: 1
-  DetonateCells: []
-  BurnCells: []
-  DetonateLaterCells: []
+  detonateOrderDelay: 10
+  populateTopDelay: 1
 --- !u!1 &4008567007382875687
 GameObject:
   m_ObjectHideFlags: 0
