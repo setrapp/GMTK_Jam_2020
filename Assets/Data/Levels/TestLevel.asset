@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 7
   height: 7
-  cells: []
+  cells:
+  - x: 0
+    y: 0
+    tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
+  - x: 1
+    y: 0
+    tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
     weight: 1
