@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960da4efdb1a34816860d4464d1a355c, type: 3}
   m_Name: Circle
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 3019c88973bb07344ade7936a002b918, type: 3}
+  image: {fileID: 2800000, guid: 3019c88973bb07344ade7936a002b918, type: 3}
   detonateFX:
   - {fileID: 2477061752162164304, guid: 41d2cbac975540f4a891fe841f8cfa05, type: 3}
   - {fileID: 2477061752162164304, guid: 2d7b6f8c63840ef40a458d4b4a5ead8c, type: 3}

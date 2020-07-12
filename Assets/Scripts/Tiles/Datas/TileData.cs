@@ -5,8 +5,8 @@ using UnityEngine;
 
 public abstract class TileData : ScriptableObject
 {
-	[SerializeField] private Sprite image = null;
-	public Sprite Image => image;
+	[SerializeField] private Texture2D image = null;
+	public Texture2D Image => image;
 
 	[SerializeField] private GameObject[] detonateFX;
 	[SerializeField] private GameObject[] burnFX;
