@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Grid;
+using Levels;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -42,6 +43,10 @@ public abstract class TileData : ScriptableObject
 
 	protected virtual void detonate(Tile target)
 	{
+		if (Score.Instance != null)
+		{
+			Score.Instance.ScoreTile();
+		}
 		RemoveFromGrid(target);
 	}
 

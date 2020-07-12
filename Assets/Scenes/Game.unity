@@ -502,6 +502,57 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!1 &524631220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 524631222}
+  - component: {fileID: 524631221}
+  m_Layer: 0
+  m_Name: Score
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &524631221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524631220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2151ca58bda411ba8f6b0768a9186aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 0
+  onLostCombo:
+    m_PersistentCalls:
+      m_Calls: []
+  onNewCombo:
+    m_PersistentCalls:
+      m_Calls: []
+  text: {fileID: 778341176}
+--- !u!4 &524631222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524631220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.7528389, y: 4.45235, z: 90.40802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &552791136
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &778341175
 RectTransform:
   m_ObjectHideFlags: 0
@@ -700,7 +751,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -882.2941, y: 306.00006}
-  m_SizeDelta: {x: 408.2063, y: 110.6613}
+  m_SizeDelta: {x: 755.8738, y: 110.6613}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &778341176
 MonoBehaviour:
@@ -721,7 +772,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 69
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23bdb6cb97fa43e4b9ed9f07411f7460, type: 2}
   m_sharedMaterial: {fileID: -5705563506895182314, guid: 23bdb6cb97fa43e4b9ed9f07411f7460,
@@ -791,7 +842,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 778341176}
-    characterCount: 2
+    characterCount: 1
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -1318,8 +1369,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -879.7, y: 316}
-  m_SizeDelta: {x: 753.27966, y: 879.5786}
+  m_AnchoredPosition: {x: -879.7, y: 195.34}
+  m_SizeDelta: {x: 753.27966, y: 758.91736}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1636803824
 MonoBehaviour:
@@ -1733,7 +1784,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1964035692
 RectTransform:
   m_ObjectHideFlags: 0
