@@ -261,11 +261,17 @@ public class TileGridCell : MonoBehaviour
 		}
 	}
 
-	public void AnimateMove(string trigger)
+    public AnimSound animSounds;
+    private void Start()
+    {
+        animSounds = Transform.FindObjectOfType<AnimSound>();
+    }
+    public void AnimateMove(string trigger)
 	{
 		if (anim != null)
 		{
-			anim.SetTrigger(trigger);
+            animSounds.PlaySwapSound();
+            anim.SetTrigger(trigger);
 		}
 		else
 		{
