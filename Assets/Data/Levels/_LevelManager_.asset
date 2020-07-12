@@ -18,5 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85363f44980f94946a4193dd1845eb72, type: 2}
   - {fileID: 11400000, guid: 7a1fb458678aebe42b2e7f44dd52220e, type: 2}
   - {fileID: 11400000, guid: f66147288e787e3479640e04c7c9c7ae, type: 2}
-  CurrentLevel: 0
-  UnlockedLevel: 0
+  - {fileID: 11400000, guid: 350ca68a581cfd442b1c5c1ad1f63570, type: 2}
+  - {fileID: 11400000, guid: 3511d142691ac0c4d8ae182e43506e91, type: 2}
+  - {fileID: 11400000, guid: 1e3bf5a3f7bd18f4db36690271b9b8c2, type: 2}
+  - {fileID: 11400000, guid: 7f647b69d1b06e84c9d4f9c083efd506, type: 2}
+  - {fileID: 11400000, guid: 29ff517123fb91f46bf7f969e6cc0190, type: 2}

@@ -10,20 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a8a09f2520c7462a9c3eae797a3a93e, type: 3}
-  m_Name: Tutorial1
+  m_Name: Level7_Dilbert
   m_EditorClassIdentifier: 
-  width: 3
-  height: 3
+  width: 10
+  height: 10
   cells: []
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
-    weight: 1
+    weight: 0.6
   - tileData: {fileID: 11400000, guid: 1ad8feab1751d4a1ca81d2232acdad39, type: 2}
     weight: 1
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
     weight: 1
+  - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
+    weight: 0.02
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3
-  spawnsBetweenGoals: 0
-  minGoalDistanceForSize: 0.5
+  spawnsBetweenGoals: 1
+  minGoalDistanceForSize: 0.6
