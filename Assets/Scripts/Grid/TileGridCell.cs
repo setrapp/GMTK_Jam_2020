@@ -43,11 +43,6 @@ public class TileGridCell : MonoBehaviour
 				{
 					tile.GridCell = this;
 				}
-
-				if (anim != null)
-				{
-					StartCoroutine(RebindAnim());
-				}
 			}
 		}
 	}
@@ -328,6 +323,12 @@ public class TileGridCell : MonoBehaviour
 		int xDiff = Data.x - other.Data.x;
 		int yDiff = Data.y - other.Data.y;
 
+		// Only count nearby neigbors.
+		if (Mathf.Abs(xDiff) + Mathf.Abs(yDiff) > 1)
+		{
+			return false;
+		}
+
 		var oppositeNeighbor = Grid.Cell(Data.x + xDiff, Data.y + yDiff);
 		if (oppositeNeighbor != null)
 		{
@@ -389,8 +390,7 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in CardinalNeighbors())
 		{
-			//bool burn = true;
-			if (neighbor != null && neighbor.IsValidMatch(starter))
+			if (neighbor != null && neighbor.IsValidMatch(this))
 			{
 				if (MatchInLine(neighbor))
 				{
@@ -414,16 +414,6 @@ public class TileGridCell : MonoBehaviour
 		foreach (var neighbor in recurseNeighbors)
 		{
 			neighbor.BuildDestructionLists(starter, order++);
-		}
-	}
-
-	private IEnumerator RebindAnim()//todo this does not seem to work
-	{
-		if (anim != null)
-		{
-			yield return null;
-			anim.Rebind();
-			anim.Update(Time.deltaTime);//TODO Is this required?
 		}
 	}
 
