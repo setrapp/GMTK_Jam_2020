@@ -73,12 +73,19 @@ namespace Grid
 			var width = SetupData.Width;
 			var height = SetupData.Height;
 
-			container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float) height / width));
-			orphanTileContainer.sizeDelta = container.sizeDelta;
+			//container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float) height / width));
+			//orphanTileContainer.sizeDelta = container.sizeDelta;
 
-			float cellSize = container.sizeDelta.x / width;
-			float startX = (-rectTransform.rect.width / 2) + (cellSize / 2);
-			float startY = (-rectTransform.rect.height / 2) + (cellSize / 2);
+			float cellSize = ((RectTransform) cellPrefab.transform).rect.width;
+
+			float wouldBeCellSize = rectTransform.rect.width / width;
+			float scaleFactor = wouldBeCellSize / cellSize;
+			transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+			container.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+			orphanTileContainer.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
+			float startX = ((-rectTransform.rect.width / 2) / scaleFactor) + (cellSize / 2);
+			float startY = ((-rectTransform.rect.height / 2) / scaleFactor) + (cellSize / 2);
 
 			// Fill grid with new cells.
 			cells = new TileGridCell[width, height];
@@ -140,8 +147,11 @@ namespace Grid
 				}
 			}
 
-			swapper.SetSideSize(cellSize);
+			//swapper.SetSideSize(cellSize);
+			swapper.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 			swapper.HideSides();
+
+			transform.localScale = new Vector3(1, 1, 1);
 
 			yield break;
 		}
