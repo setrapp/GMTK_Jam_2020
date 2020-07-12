@@ -25,6 +25,7 @@ public class TileGridCell : MonoBehaviour
 	}
 
 	private Tile tile = null;
+	public Tile awaitingFallingTile = null;
 
 	public Tile Tile
 	{

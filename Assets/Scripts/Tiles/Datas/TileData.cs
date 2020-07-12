@@ -47,12 +47,10 @@ public abstract class TileData : ScriptableObject
 
 	public void RemoveFromGrid(Tile target)
 	{
-		if (target.GridCell != null)
+		if (target != null)
 		{
-			target.GridCell.Tile = null;
+			target.removeFromCell();
+			Destroy(target.gameObject);
 		}
-
-		target.GridCell = null;
-		Destroy(target.gameObject);
 	}
 }

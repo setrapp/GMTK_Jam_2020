@@ -19,6 +19,7 @@ namespace Grid
 		[SerializeField] private Tile tilePrefab = null;
 		[SerializeField] private TileGridCell cellPrefab = null;
 		[SerializeField] private RectTransform container = null;
+		[SerializeField] public RectTransform orphanTileContainer = null;
 		[SerializeField] private TileSwapper swapper = null;
 		[SerializeField] private bool ignoreBurnInEditor = false;
 		public TileSwapper Swapper => swapper;
@@ -73,6 +74,8 @@ namespace Grid
 			var height = SetupData.Height;
 
 			container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float) height / width));
+			orphanTileContainer.sizeDelta = container.sizeDelta;
+
 			float cellSize = container.sizeDelta.x / width;
 			float startX = (-rectTransform.rect.width / 2) + (cellSize / 2);
 			float startY = (-rectTransform.rect.height / 2) + (cellSize / 2);
@@ -360,6 +363,7 @@ namespace Grid
 				if (cells[i, y].Tile == null)
 				{
 					cells[i, y].GenerateTile(setupData.GetRandomTileData());
+					cells[i, y].HandleGridChange();
 				}
 			}
 		}

@@ -26,6 +26,11 @@ public class Tile : MonoBehaviour
 
 	public DestroryState destroyState = DestroryState.None;
 
+	private TileGridCell fallToCell = null;
+	private Coroutine fallRoutine = null;
+
+	[SerializeField] private float maxFallSpeed = 1;
+
 	public TileData Data
 	{
 		get { return data; }
@@ -177,6 +182,64 @@ public class Tile : MonoBehaviour
 
 	public void HandleGridChange()
 	{
+		// TODO This is gonna get weird with rotation
 
+		var cellBelow = GridCell.GetCellBelow();
+		while (cellBelow != null && cellBelow.Tile == null && cellBelow.awaitingFallingTile == null)
+		{
+			fallToCell = cellBelow;
+			cellBelow = cellBelow.GetCellBelow();
+		}
+
+		if (fallToCell != null && fallRoutine == null)
+		{
+			fallRoutine = StartCoroutine(fall());
+		}
+	}
+
+	private IEnumerator fall()
+	{
+		if (GridCell != null)
+		{
+			removeFromCell();
+			fallToCell.awaitingFallingTile= this;
+		}
+
+		bool stillFalling = true;
+		while (stillFalling)
+		{
+			// TODO Handle rotation.
+			var localPos = transform.localPosition;
+			localPos.y -= maxFallSpeed;
+
+			if (localPos.y < fallToCell.transform.localPosition.y)
+			{
+				localPos.y = fallToCell.transform.localPosition.y;
+				stillFalling = false;
+			}
+
+			transform.localPosition = localPos;
+			yield return null;
+		}
+
+		fallToCell.awaitingFallingTile = null;
+		fallToCell.Tile = this;
+
+		fallRoutine = null;
+		fallToCell = null;
+		LockedIn = true;
+	}
+
+	public void removeFromCell()
+	{
+		LockedIn = false;
+		transform.parent = GridCell.Grid.orphanTileContainer;
+
+		if (GridCell != null)
+		{
+			GridCell.Tile = null;
+		}
+
+		GridCell = null;
 	}
 }
