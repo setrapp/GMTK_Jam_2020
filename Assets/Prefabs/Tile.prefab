@@ -61,7 +61,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   LockedIn: 1
   destroyState: 0
-  waitFramesBeforeFall: 10
+  waitFramesBeforeFall: 5
   maxFallSpeed: 36
   rematchAfterFall: 0
   allowNewTilesToMatch: 0

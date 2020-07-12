@@ -15,7 +15,7 @@ public class AccelerantTileData : TileData
 			{
 				return false;
 			}
-			else
+			else if(other is ShapeTileData)
 			{
 				return pin.Ticking;
 			}
