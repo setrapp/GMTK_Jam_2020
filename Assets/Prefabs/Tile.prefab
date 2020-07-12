@@ -65,8 +65,6 @@ MonoBehaviour:
   waitFramesBeforeFall: 5
   maxFallSpeed: 36
   rematchAfterFall: 0
-  allowNewTilesToMatch: 0
-  isNewTile: 0
 --- !u!114 &4132626072998795945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
