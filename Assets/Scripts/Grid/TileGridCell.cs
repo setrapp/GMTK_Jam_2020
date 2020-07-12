@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Grid;
-using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
-using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 public class TileGridCell : MonoBehaviour
 {
