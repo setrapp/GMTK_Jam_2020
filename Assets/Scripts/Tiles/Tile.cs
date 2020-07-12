@@ -240,6 +240,7 @@ public class Tile : MonoBehaviour
 		if (GridCell != null)
 		{
 			GridCell.CheckForTriplet();
+			GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
 		}
 	}
 
