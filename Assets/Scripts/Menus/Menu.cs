@@ -6,10 +6,13 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
 	[SerializeField] bool quitOnEscape = false;
+	[SerializeField] private Texture2D cursor = null;
+	[SerializeField] private Vector2 cursorHotspot = Vector2.zero;
 
 	protected virtual void Awake()
 	{
 		Application.targetFrameRate = 60;
+		Cursor.SetCursor(cursor, cursorHotspot, CursorMode.ForceSoftware);
 	}
 
 	private void Update()

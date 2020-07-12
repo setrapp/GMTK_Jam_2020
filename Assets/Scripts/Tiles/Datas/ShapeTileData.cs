@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "ShapeTileType", menuName = "ScriptableObjects/TileTypes/ShapeTileData")]
+[CreateAssetMenu(fileName = "ShapeTileData", menuName = "ScriptableObjects/TileDatas/ShapeTileData")]
 public class ShapeTileData : TileData
 {
 	public enum TileShape

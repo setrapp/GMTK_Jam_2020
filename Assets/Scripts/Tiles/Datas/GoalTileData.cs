@@ -1,7 +1,7 @@
 ﻿using Grid;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GoalTileType", menuName = "ScriptableObjects/TileTypes/GoalTileData")]
+[CreateAssetMenu(fileName = "GoalTileData", menuName = "ScriptableObjects/TileDatas/GoalTileData")]
 public class GoalTileData : TileData
 {
 	public override void OnSpawn(Tile target, TileGrid grid)

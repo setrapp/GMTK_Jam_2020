@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "AccelerantTileType", menuName = "ScriptableObjects/TileTypes/AccelerantTileData")]
+[CreateAssetMenu(fileName = "AccelerantTileData", menuName = "ScriptableObjects/TileDatas/AccelerantTileData")]
 public class AccelerantTileData : TileData
 {
 	[SerializeField] private float detonateAfter = 1;
@@ -8,6 +8,11 @@ public class AccelerantTileData : TileData
 
 	public override bool IsMatch(TileData other, Tile targetTile)
 	{
+		if (other is AccelerantTileData)
+		{
+			return true;
+		}
+
 		if (other != null && targetTile != null)
 		{
 			var pin = targetTile.GetComponent<AccelerantPin>();
