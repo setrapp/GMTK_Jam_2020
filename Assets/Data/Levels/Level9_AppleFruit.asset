@@ -22,10 +22,13 @@ MonoBehaviour:
     weight: 0.8
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
     weight: 1
-  - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
+  - tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
+    weight: 0.05
+  - tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
     weight: 0.05
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3
   spawnsBetweenGoals: 2
   minGoalDistanceForSize: 0.6
+  helpText: 

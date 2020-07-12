@@ -17,13 +17,16 @@ MonoBehaviour:
   cells: []
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
-    weight: 0.6
+    weight: 1
   - tileData: {fileID: 11400000, guid: 1ad8feab1751d4a1ca81d2232acdad39, type: 2}
     weight: 1
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
     weight: 1
+  - tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
+    weight: 0.1
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3
   spawnsBetweenGoals: 1
   minGoalDistanceForSize: 0.5
+  helpText: Some rotating blocks will rotate the opposite direction.

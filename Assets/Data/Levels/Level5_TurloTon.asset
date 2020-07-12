@@ -22,8 +22,12 @@ MonoBehaviour:
     weight: 1
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
     weight: 1
+  - tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
+    weight: 1
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3
   spawnsBetweenGoals: 1
   minGoalDistanceForSize: 0.5
+  helpText: Would you look at that? Some of the block rotate. If a rotating block
+    is adjacent to a block recently cleared, the map will rotate.
