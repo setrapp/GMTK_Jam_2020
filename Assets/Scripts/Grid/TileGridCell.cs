@@ -255,16 +255,11 @@ public class TileGridCell : MonoBehaviour
 		}
 	}
 
-    public AnimSound animSounds;
-    private void Start()
-    {
-        animSounds = Transform.FindObjectOfType<AnimSound>();
-    }
     public void AnimateMove(string trigger)
 	{
 		if (anim != null)
 		{
-            animSounds.PlaySwapSound();
+            AudioManager.Instance.PlaySwapAudio();
             anim.SetTrigger(trigger);
 		}
 		else
@@ -282,7 +277,8 @@ public class TileGridCell : MonoBehaviour
 	{
 		if (InTriplet())
 		{
-			BuildDestructionLists(null, 0);
+            AudioManager.Instance.PlayBeat();
+            BuildDestructionLists(null, 0);
 		}
 	}
 
