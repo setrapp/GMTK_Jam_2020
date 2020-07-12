@@ -59,6 +59,8 @@ MonoBehaviour:
   button: {fileID: 4132626072998795945}
   anim: {fileID: 0}
   LockedIn: 1
+  destroyState: 0
+  maxFallSpeed: 4
 --- !u!114 &4132626072998795945
 MonoBehaviour:
   m_ObjectHideFlags: 0

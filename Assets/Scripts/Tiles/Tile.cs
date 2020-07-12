@@ -182,6 +182,11 @@ public class Tile : MonoBehaviour
 
 	public void HandleGridChange()
 	{
+		checkForFalling();
+	}
+
+	private void checkForFalling()
+	{
 		// TODO This is gonna get weird with rotation
 
 		var cellBelow = GridCell.GetCellBelow();
@@ -228,6 +233,14 @@ public class Tile : MonoBehaviour
 		fallRoutine = null;
 		fallToCell = null;
 		LockedIn = true;
+
+		HandleGridChange();
+
+		yield return null;
+		if (GridCell != null)
+		{
+			GridCell.CheckForTriplet();
+		}
 	}
 
 	public void removeFromCell()

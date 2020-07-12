@@ -251,7 +251,7 @@ public class TileGridCell : MonoBehaviour
 	{
 		if (InTriplet())
 		{
-			BuildDestructionLists(this, 0);
+			BuildDestructionLists(null, 0);
 		}
 	}
 

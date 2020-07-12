@@ -51,7 +51,7 @@ namespace Grid
 			timeUntilPopulateTop -= Time.deltaTime;
 			if (timeUntilPopulateTop <= 0)
 			{
-				PopulateTopCells();
+				StartCoroutine(PopulateTopCells());
 				timeUntilPopulateTop = populateTopDelay;
 			}
 		}
@@ -278,6 +278,7 @@ namespace Grid
 			if (starter != null && DetonateCells.ContainsKey(starter))
 			{
 				List<DetonateCellData> detonateData = DetonateCells[starter];
+				DetonateCells.Remove(starter);
 
 				int order = 0;
 				bool done = false;
@@ -325,6 +326,7 @@ namespace Grid
 						}
 
 						yield return null;
+						yield return null;
 
 						foreach (var cell in cells)
 						{
@@ -347,12 +349,11 @@ namespace Grid
 					}
 				}
 
-				DetonateCells[starter].Clear();
-				DetonateCells.Remove(starter);
+				detonateData.Clear();
 			}
 		}
 
-		public void PopulateTopCells()
+		public IEnumerator PopulateTopCells()
 		{
 			// TODO Handle rotation
 			int y = GridHeight - 1;
@@ -363,8 +364,14 @@ namespace Grid
 				if (cells[i, y].Tile == null)
 				{
 					cells[i, y].GenerateTile(setupData.GetRandomTileData());
-					cells[i, y].HandleGridChange();
 				}
+			}
+
+			yield return null;
+
+			for (int i = 0; i < cellsOnTop; i++)
+			{
+				cells[i, y].HandleGridChange();
 			}
 		}
 	}
