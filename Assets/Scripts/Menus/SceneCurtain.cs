@@ -28,7 +28,7 @@ public class SceneCurtain : MonoBehaviour
 
 	public static void ChangeScene(string scene)
 	{
-		if (Instance == null)
+		if (true)//Instance == null)
 		{
 			SceneManager.LoadScene(scene);
 			return;

@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour
 		SceneCurtain.ChangeScene(scene);
 	}
 
-	public void Event_Quit()
+	public virtual void Event_Quit()
 	{
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;

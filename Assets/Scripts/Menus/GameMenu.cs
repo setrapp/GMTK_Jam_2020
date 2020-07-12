@@ -31,4 +31,9 @@ public class GameMenu : Menu
 		levelManager.CurrentLevel++;
 		SceneManager.LoadScene(nextLevelScene);
 	}
+
+	public override void Event_Quit()
+	{
+		Event_GotoScene("MainMenu");
+	}
 }
