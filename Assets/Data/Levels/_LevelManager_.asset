@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: _LevelManager_
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 11400000, guid: d0772d0b382ed4d86b651a06173defb3, type: 2}
+  - {fileID: 11400000, guid: f027d75491767a5458018ae3413fb4ea, type: 2}
+  - {fileID: 11400000, guid: ed6b55953cc6a5d49a9b56f6b6afb6a1, type: 2}
+  - {fileID: 11400000, guid: 85363f44980f94946a4193dd1845eb72, type: 2}
+  - {fileID: 11400000, guid: 7a1fb458678aebe42b2e7f44dd52220e, type: 2}
+  - {fileID: 11400000, guid: f66147288e787e3479640e04c7c9c7ae, type: 2}
   CurrentLevel: 0
   UnlockedLevel: 0
