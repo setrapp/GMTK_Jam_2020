@@ -20,5 +20,6 @@ public class RotateTileData : TileData
 		{
 			target.GridCell.Grid.Rotate(90 * rotateDirection);
 		}
+		base.burn(target);
 	}
 }

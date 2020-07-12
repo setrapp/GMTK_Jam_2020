@@ -11,6 +11,8 @@ public class SpriteAnimator : MonoBehaviour
 	private int spriteIndex = -1;
 
 	[SerializeField] private int framesPerSprite = 1;
+	private int multiplierFramesPerSprite = 1;
+
 	private int framesUntilSprite = 0;
 
 	private void Awake()
@@ -18,8 +20,9 @@ public class SpriteAnimator : MonoBehaviour
 		image = GetComponent<Image>();
 	}
 
-	public void AttachSpriteSheet(Texture2D spriteSheet)
+	public void AttachSpriteSheet(Texture2D spriteSheet, int multiplierFramesPerSprite)
 	{
+		this.multiplierFramesPerSprite = multiplierFramesPerSprite;
 		sprites = null;
 		if (spriteSheet == null)
 		{
@@ -35,7 +38,7 @@ public class SpriteAnimator : MonoBehaviour
 	{
 		if (framesUntilSprite <= 0)
 		{
-			framesUntilSprite = framesPerSprite;
+			framesUntilSprite = Mathf.Abs(framesPerSprite * multiplierFramesPerSprite);
 			NextSprite();
 		}
 		else
@@ -52,7 +55,19 @@ public class SpriteAnimator : MonoBehaviour
 			return;
 		}
 
-		spriteIndex = (spriteIndex + 1) % sprites.Length;
+		spriteIndex = spriteIndex + (framesPerSprite * multiplierFramesPerSprite < 0
+			? -1
+			: 1);
+
+		if (spriteIndex < 0)
+		{
+			spriteIndex = sprites.Length - 1;
+		}
+		else if (spriteIndex > sprites.Length - 1)
+		{
+			spriteIndex = 0;
+		}
+
 		image.sprite = sprites[spriteIndex];
 	}
 }

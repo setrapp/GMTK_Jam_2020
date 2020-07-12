@@ -8,6 +8,8 @@ public abstract class TileData : ScriptableObject
 	[SerializeField] private Texture2D image = null;
 	public Texture2D Image => image;
 
+	public int framesPerSprite = 1;
+
 	[SerializeField] private GameObject[] detonateFX;
 	[SerializeField] private GameObject[] burnFX;
 

@@ -50,13 +50,13 @@ public class Tile : MonoBehaviour
 				{
 					//image.sprite = data.Image;
 					//image.gameObject.SetActive(true);
-					spriteAnimator.AttachSpriteSheet(data.Image);
+					spriteAnimator.AttachSpriteSheet(data.Image, data.framesPerSprite);
 					spriteAnimator.gameObject.SetActive(true);
 					button.interactable = data.Swappable;
 				}
 				else
 				{
-					spriteAnimator.AttachSpriteSheet(data.Image);
+					spriteAnimator.AttachSpriteSheet(null, 1);
 					spriteAnimator.gameObject.SetActive(true);
 					button.interactable = false;
 				}
