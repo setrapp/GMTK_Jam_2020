@@ -291,6 +291,7 @@ namespace Grid
 				DetonateCells[startingCell].Add(new DetonateCellData()
 				{
 					cell = startingCell,
+					tile = startingCell.Tile,
 					order = 0
 				});
 
@@ -320,6 +321,7 @@ namespace Grid
 				DetonateCells[startingCell].Add(new DetonateCellData()
 				{
 					cell = toDetonate,
+					tile = toDetonate.Tile,
 					order = order
 				});
 			}
@@ -346,7 +348,7 @@ namespace Grid
 						// TODO Remove detonatedCells from list (make sure this doesn't break list checks when adding news (like weird loops)
 
 						var cell = detonateData[i];
-						if (cell != null && cell.cell != null && cell.cell.Tile != null && cell.order == order)
+						if (cell != null && cell.cell != null && cell.cell.Tile != null && cell.order == order && cell.tile == cell.cell.Tile)
 						{
 							toDetonate.Add(cell.cell);
 							detonateData.RemoveAt(i);
@@ -450,13 +452,19 @@ namespace Grid
 						spawnsUntilGoalAllowed--;
 					}
 
+					Tile newTile = null;
 					if (!forceGoal)
 					{
-						cells[i, y].GenerateTile(setupData.GetRandomTileData());
+						newTile = cells[i, y].GenerateTile(setupData.GetRandomTileData());
 					}
 					else
 					{
-						cells[i, y].GenerateTile(setupData.goalTileData);
+						newTile = cells[i, y].GenerateTile(setupData.goalTileData);
+					}
+
+					if (newTile != null)
+					{
+						newTile.isNewTile = true;
 					}
 				}
 			}
@@ -473,6 +481,7 @@ namespace Grid
 	public class DetonateCellData
 	{
 		public TileGridCell cell;
+		public Tile tile;
 		public int order = 0;
 	}
 }
