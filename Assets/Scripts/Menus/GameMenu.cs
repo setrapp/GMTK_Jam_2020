@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameMenu : Menu
 {
@@ -8,6 +9,10 @@ public class GameMenu : Menu
 	public static GameMenu Instance => instance;
 
 	public UnityEvent onWin = null;
+
+	[SerializeField] private LevelManager levelManager;
+
+	[SerializeField] private string nextLevelScene = null;
 
 	protected override void Awake()
 	{
@@ -19,5 +24,11 @@ public class GameMenu : Menu
 	{
 		//TODO Do something better
 		onWin.Invoke();
+	}
+
+	public void Event_NextLevel()
+	{
+		levelManager.CurrentLevel++;
+		SceneManager.LoadScene(nextLevelScene);
 	}
 }
