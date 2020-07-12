@@ -11,7 +11,24 @@ public class LevelManager : ScriptableObject
 	[SerializeField] private Level[] levels = null;
 	public Level[] Levels => levels;
 
-	[NonSerialized] public uint CurrentLevel = 0;
+	[NonSerialized] private int currentLevel = -1;
+
+	public uint CurrentLevel
+	{
+		get
+		{
+			if (currentLevel < 0)
+			{
+				currentLevel = (int)Mathf.Max(UnlockedLevel, (uint) PlayerPrefs.GetInt(unlockedPref));
+			}
+
+			return (uint)Mathf.Max(currentLevel, 0);
+		}
+		set
+		{
+			currentLevel++;
+		}
+	}
 	[NonSerialized] public uint UnlockedLevel = 0;
 
 	public void UnlockCurrentLevel()
