@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8a09f2520c7462a9c3eae797a3a93e, type: 3}
   m_Name: Level2_Tinroll
   m_EditorClassIdentifier: 
-  width: 6
-  height: 6
+  width: 5
+  height: 5
   cells: []
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
