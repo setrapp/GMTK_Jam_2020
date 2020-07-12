@@ -14,8 +14,7 @@ public abstract class TileData : ScriptableObject
 
 	public bool DestroyOnBurn = false;
 
-	public abstract bool IsMatch(TileData other);
-	public abstract bool IsBurnMatch(TileData other);
+	public abstract bool IsMatch(TileData other, Tile targetTile);
 
 	// Destroy Tile and take neighbors with it.
 	public void Detonate(Tile target)

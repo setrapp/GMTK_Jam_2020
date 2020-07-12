@@ -1,10 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
 	[SerializeField] bool quitOnEscape = false;
+
+	private void Awake()
+	{
+		Application.targetFrameRate = 30;
+	}
 
 	private void Update()
 	{
