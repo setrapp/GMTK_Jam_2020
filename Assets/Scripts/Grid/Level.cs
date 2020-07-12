@@ -19,6 +19,7 @@ public class Level : ScriptableObject
 	[SerializeField] public int maxGoalCount = 3;
 	[SerializeField] public int spawnsBetweenGoals = 5;
 	[SerializeField] public float minGoalDistanceForSize = 0.5f;
+	[SerializeField] public string helpText = null;
 
 	public IEnumerable<LevelTileGridCellData> GetCells()
 	{

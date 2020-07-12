@@ -28,4 +28,5 @@ MonoBehaviour:
   chanceToSpawnGoal: 1
   maxGoalCount: 3
   spawnsBetweenGoals: 5
-  minGoalDistanceForSize: 0.5
+  minGoalDistanceForSize: 0.3
+  helpText: 

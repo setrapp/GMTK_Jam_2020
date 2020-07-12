@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class Tile : MonoBehaviour
 {
@@ -33,9 +35,8 @@ public class Tile : MonoBehaviour
 	[SerializeField] private float waitFramesBeforeFall = 0;
 	[SerializeField] private float maxFallSpeed = 1;
 	[SerializeField] private bool rematchAfterFall = true;
-	[SerializeField] private bool allowNewTilesToMatch = true;
 
-	public bool isNewTile = false;
+	private List<TileGridCell> fallThroughTiles = null;
 
 	public TileData Data
 	{
@@ -194,8 +195,14 @@ public class Tile : MonoBehaviour
 		}
 
 		var cellBelow = GridCell.GetCellBelow();
+		if (fallToCell == null)
+		{
+			fallThroughTiles = new List<TileGridCell>();
+		}
+
 		while (cellBelow != null && cellBelow.Tile == null && cellBelow.awaitingFallingTile == null)
 		{
+			fallThroughTiles.Add(cellBelow);
 			fallToCell = cellBelow;
 			cellBelow = cellBelow.GetCellBelow();
 		}
@@ -222,13 +229,44 @@ public class Tile : MonoBehaviour
 		bool stillFalling = true;
 		while (stillFalling)
 		{
+			if (fallToCell.Grid.Rotating)
+			{
+				float bestDist = -1;
+				TileGridCell bestCell = null;
+				foreach (var cell in fallThroughTiles)
+				{
+					var sqrDist = (transform.position - cell.transform.position).sqrMagnitude;
+					if (bestDist < 0 || sqrDist < bestDist)
+					{
+						bestDist = sqrDist;
+						bestCell = cell;
+					}
+				}
+
+				GridCell = bestCell;
+				transform.SetParent(bestCell.transform);
+				transform.localPosition = Vector3.zero;
+
+				while (fallToCell.Grid.Rotating)
+				{
+					yield return null;
+				}
+
+				fallRoutine = null;
+				fallToCell = null;
+
+				yield break;
+			}
+
 			// TODO Handle rotation.
 			var localPos = transform.localPosition;
-			localPos.y -= maxFallSpeed;
 
-			if (localPos.y < fallToCell.transform.localPosition.y)
+			//localPos.y -= maxFallSpeed;
+			localPos -= transform.InverseTransformDirection(Vector3.up) * maxFallSpeed;
+
+			if (transform.position.y < fallToCell.transform.position.y)
 			{
-				localPos.y = fallToCell.transform.localPosition.y;
+				localPos = fallToCell.transform.localPosition;
 				stillFalling = false;
 			}
 
@@ -246,7 +284,7 @@ public class Tile : MonoBehaviour
 
 		HandleGridChange();
 
-		if (rematchAfterFall && (!isNewTile || allowNewTilesToMatch))
+		if (rematchAfterFall)
 		{
 			yield return null;
 			if (GridCell != null)
@@ -255,7 +293,6 @@ public class Tile : MonoBehaviour
 				GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
 			}
 		}
-		isNewTile = false;
 	}
 
 	public void removeFromCell()

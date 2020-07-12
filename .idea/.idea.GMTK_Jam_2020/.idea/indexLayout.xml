@@ -12,6 +12,7 @@
       <Path>Library/PackageCache/com.unity.timeline@1.2.14</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
+      <Path>../../../../Library/Unity/cache/packages/packages.unity.com/com.unity.postprocessing@2.3.0</Path>
     </explicitIncludes>
     <explicitExcludes>
       <Path>.git</Path>

@@ -7,6 +7,16 @@ namespace Grid
 {
 	public class TileGrid : MonoBehaviour
 	{
+		public enum TopSide
+		{
+			Up,
+			Right,
+			Down,
+			Left
+		}
+
+		public TopSide topSide = TopSide.Up;
+
 		[SerializeField] private Level setupData = null;
 
 		private Level SetupData
@@ -21,6 +31,13 @@ namespace Grid
 		[SerializeField] private RectTransform container = null;
 		[SerializeField] public RectTransform orphanTileContainer = null;
 		[SerializeField] private TileSwapper swapper = null;
+
+		[SerializeField] private TextRenderer titleText;
+		[SerializeField] private TextRenderer helpText;
+
+		[SerializeField] private float rotateTime = 1;
+		private Coroutine rotating = null;
+		public bool Rotating => rotating != null;
 
 		public List<Tile> activeGoals = null;
 		private int spawnsUntilGoalAllowed = 0;
@@ -47,6 +64,9 @@ namespace Grid
 			GenerateGrid(levelManager.Levels[levelManager.CurrentLevel]);
 			DetonateCells = new Dictionary<TileGridCell, List<DetonateCellData>>();
 			timeUntilPopulateTop = populateTopDelay;
+
+			titleText.SetText(setupData.name);
+			helpText.SetText(setupData.helpText);
 		}
 
 		private void Update()
@@ -57,6 +77,8 @@ namespace Grid
 				StartCoroutine(PopulateTopCells());
 				timeUntilPopulateTop = populateTopDelay;
 			}
+
+			if (Input.GetKeyDown(KeyCode.R)){ Rotate(90);}
 		}
 
 		public void GenerateGrid(Level data)
@@ -275,7 +297,21 @@ namespace Grid
 			}
 
 			//TODO Handle rotation;
-			return Cell(cell.Data.x, cell.Data.y - 1);
+			switch (topSide)
+			{
+				case TopSide.Left:
+					return Cell(cell.Data.x + 1, cell.Data.y);
+
+				case TopSide.Right:
+					return Cell(cell.Data.x - 1, cell.Data.y);
+
+				case TopSide.Down:
+					return Cell(cell.Data.x, cell.Data.y + 1);
+
+				case TopSide.Up:
+				default:
+					return Cell(cell.Data.x, cell.Data.y - 1);
+			}
 		}
 
 		public bool PrepareToDetonate(TileGridCell toDetonate, int order, TileGridCell startingCell)
@@ -410,11 +446,50 @@ namespace Grid
 		{
 			// TODO Handle rotation
 			int y = GridHeight - 1;
-			int cellsOnTop = GridWidth;
+			List<TileGridCell> topCells = new List<TileGridCell>();
 
-			for (int i = 0; i < cellsOnTop; i++)
+			int topIndex = 0;
+
+			switch (topSide)
 			{
-				if (cells[i, y].Tile == null)
+				case TopSide.Left:
+					y = 0;
+					for (topIndex = 0; topIndex < GridHeight; topIndex++)
+					{
+						topCells.Add(cells[y, topIndex]);
+					}
+
+					break;
+				case TopSide.Right:
+					y = GridWidth - 1;
+					for (topIndex = 0; topIndex < GridHeight; topIndex++)
+					{
+						topCells.Add(cells[y, topIndex]);
+					}
+
+					break;
+				case TopSide.Down:
+					y = 0;
+					for (topIndex = 0; topIndex < GridWidth; topIndex++)
+					{
+						topCells.Add(cells[topIndex, y]);
+					}
+
+					break;
+				case TopSide.Up:
+				default:
+					y = GridHeight - 1;
+					for (topIndex = 0; topIndex < GridWidth; topIndex++)
+					{
+						topCells.Add(cells[topIndex, y]);
+					}
+
+					break;
+			}
+
+			for (int i = 0; i < topCells.Count; i++)
+			{
+				if (topCells[i].Tile == null)
 				{
 					bool forceGoal = false;
 					if (spawnsUntilGoalAllowed <= 0)
@@ -439,8 +514,8 @@ namespace Grid
 								}
 							}
 
-						if ((nearestGoal < 0 || nearestGoal >= (int)(setupData.minGoalDistanceForSize * GridWidth))
-						    && Random.Range(0f, 1f) < setupData.chanceToSpawnGoal)
+							if ((nearestGoal < 0 || nearestGoal >= (int) (setupData.minGoalDistanceForSize * GridWidth))
+							    && Random.Range(0f, 1f) < setupData.chanceToSpawnGoal)
 							{
 								forceGoal = true;
 								spawnsUntilGoalAllowed = setupData.spawnsBetweenGoals;
@@ -455,25 +530,90 @@ namespace Grid
 					Tile newTile = null;
 					if (!forceGoal)
 					{
-						newTile = cells[i, y].GenerateTile(setupData.GetRandomTileData());
+						newTile = topCells[i].GenerateTile(setupData.GetRandomTileData());
 					}
 					else
 					{
-						newTile = cells[i, y].GenerateTile(setupData.goalTileData);
-					}
-
-					if (newTile != null)
-					{
-						newTile.isNewTile = true;
+						newTile = topCells[i].GenerateTile(setupData.goalTileData);
 					}
 				}
 			}
 
 			yield return null;
 
-			for (int i = 0; i < cellsOnTop; i++)
+			for (int i = 0; i < topCells.Count; i++)
 			{
 				cells[i, y].HandleGridChange();
+			}
+		}
+
+		public void Rotate(int rotation)
+		{
+			if (rotateTime <= 0)
+			{
+				transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z + rotation);
+
+			}
+
+			if (rotating == null)
+			{
+				rotating = StartCoroutine(rotate(rotation));
+			}
+		}
+
+		private IEnumerator rotate(int rotation)
+		{
+			float targetRotation = transform.eulerAngles.z + rotation;
+			float startRotation = transform.eulerAngles.z;
+
+			float portion = 0;
+			while (portion < 1)
+			{
+				portion += (Time.deltaTime / rotateTime);
+				if (portion >= 1)
+				{
+					transform.eulerAngles = new Vector3(0, 0, targetRotation);
+					break;
+				}
+				else
+				{
+					transform.eulerAngles = new Vector3(0, 0, (startRotation * (1 - portion)) + (targetRotation * portion));
+				}
+
+				yield return null;
+			}
+
+			if (targetRotation < 0)
+			{
+				targetRotation = 360 + targetRotation;
+			}
+			targetRotation %= 360;
+
+			if (((int)targetRotation + 1) / 90 == 0)
+			{
+				topSide = TopSide.Up;
+			}
+
+			if (((int)targetRotation + 1) / 90 == 1)
+			{
+				topSide = TopSide.Right;
+			}
+
+			if (((int)targetRotation + 1) / 90 == 2)
+			{
+				topSide = TopSide.Down;
+			}
+
+			if (((int)targetRotation + 1) / 90 == 3)
+			{
+				topSide = TopSide.Left;
+			}
+
+			rotating = null;
+
+			foreach (var cell in cells)
+			{
+				cell.HandleGridChange();
 			}
 		}
 	}
