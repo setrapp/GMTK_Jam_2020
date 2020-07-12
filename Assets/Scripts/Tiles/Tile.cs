@@ -211,6 +211,11 @@ public class Tile : MonoBehaviour
 		{
 			fallRoutine = StartCoroutine(fall());
 		}
+
+		if (fallToCell == null)
+		{
+			LockedIn = true;
+		}
 	}
 
 	private IEnumerator fall()
@@ -245,7 +250,7 @@ public class Tile : MonoBehaviour
 
 				fallToCell.awaitingFallingTile = null;
 				bestCell.Tile = this;
-				transform.SetParent(bestCell.transform);
+				transform.SetParent(bestCell.tileContainer.transform);
 				transform.localPosition = Vector3.zero;
 
 				while (fallToCell.Grid.Rotating)
