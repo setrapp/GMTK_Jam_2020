@@ -212,6 +212,7 @@ public class Tile : MonoBehaviour
 
 		fallToCell.awaitingFallingTile = null;
 		fallToCell.Tile = this;
+		transform.SetParent(fallToCell.tileContainer.transform);
 
 		fallRoutine = null;
 		fallToCell = null;

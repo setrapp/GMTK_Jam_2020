@@ -14,6 +14,12 @@ public class Level : ScriptableObject
 
 	[SerializeField] RandomTileData[] allowedRandomTiles = null;
 
+	[SerializeField] public GoalTileData goalTileData = null;
+	[SerializeField] public float chanceToSpawnGoal = 1;
+	[SerializeField] public int maxGoalCount = 3;
+	[SerializeField] public int spawnsBetweenGoals = 5;
+	[SerializeField] public float minGoalDistanceForSize = 0.5f;
+
 	public IEnumerable<LevelTileGridCellData> GetCells()
 	{
 		foreach (var cell in cells)

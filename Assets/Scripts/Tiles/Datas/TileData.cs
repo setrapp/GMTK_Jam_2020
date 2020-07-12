@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Grid;
 using UnityEngine;
 
 public abstract class TileData : ScriptableObject
@@ -13,6 +14,8 @@ public abstract class TileData : ScriptableObject
 	public bool Swappable => true;
 
 	public bool DestroyOnBurn = false;
+
+	public virtual void OnSpawn(Tile target, TileGrid grid) { }
 
 	public abstract bool IsMatch(TileData other, Tile targetTile);
 

@@ -397,6 +397,10 @@ MonoBehaviour:
   container: {fileID: 3048890753952222632}
   orphanTileContainer: {fileID: 6131791572051777611}
   swapper: {fileID: 0}
+  goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
+  chanceToSpawnGoal: 1
+  maxGoalCount: 3
+  activeGoals: []
   detonateOrderDelay: 10
   populateTopDelay: 1
 --- !u!1 &4008567007382875687

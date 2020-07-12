@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
 {
 	[SerializeField] bool quitOnEscape = false;
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		Application.targetFrameRate = 30;
 	}

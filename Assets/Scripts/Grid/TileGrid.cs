@@ -22,6 +22,9 @@ namespace Grid
 		[SerializeField] public RectTransform orphanTileContainer = null;
 		[SerializeField] private TileSwapper swapper = null;
 
+		public List<Tile> activeGoals = null;
+		private int spawnsUntilGoalAllowed = 0;
+
 		public TileSwapper Swapper => swapper;
 
 		private TileGridCell selectedCell = null;
@@ -63,6 +66,8 @@ namespace Grid
 
 		private IEnumerator generateGrid(Level data)
 		{
+			activeGoals = new List<Tile>();
+
 			var rectTransform = transform as RectTransform;
 
 			if (data != null)
@@ -409,7 +414,50 @@ namespace Grid
 			{
 				if (cells[i, y].Tile == null)
 				{
-					cells[i, y].GenerateTile(setupData.GetRandomTileData());
+					bool forceGoal = false;
+					if (spawnsUntilGoalAllowed <= 0)
+					{
+						if (activeGoals.Count < setupData.maxGoalCount)
+						{
+							var nearestGoal = -1;
+							foreach (var goal in activeGoals)
+							{
+								if (goal.GridCell == null)
+								{
+									// If the goal does not have a cell, assume it is falling and don't allow another goal to spawn.
+									nearestGoal = 0;
+								}
+								else
+								{
+									var goalDist = Mathf.Abs(goal.GridCell.Data.x - i) + Mathf.Abs(goal.GridCell.Data.y - y);
+									if (nearestGoal < 0 || goalDist < nearestGoal)
+									{
+										nearestGoal = goalDist;
+									}
+								}
+							}
+
+						if ((nearestGoal < 0 || nearestGoal >= (int)(setupData.minGoalDistanceForSize * GridWidth))
+						    && Random.Range(0f, 1f) < setupData.chanceToSpawnGoal)
+							{
+								forceGoal = true;
+								spawnsUntilGoalAllowed = setupData.spawnsBetweenGoals;
+							}
+						}
+					}
+					else
+					{
+						spawnsUntilGoalAllowed--;
+					}
+
+					if (!forceGoal)
+					{
+						cells[i, y].GenerateTile(setupData.GetRandomTileData());
+					}
+					else
+					{
+						cells[i, y].GenerateTile(setupData.goalTileData);
+					}
 				}
 			}
 

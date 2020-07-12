@@ -216,6 +216,8 @@ public class TileGridCell : MonoBehaviour
 
 		tile.GridCell = this;
 		tile.Data = tileData;
+
+		tile.Data.OnSpawn(tile, Grid);
 	}
 
 	public bool CanBeginSwap()
