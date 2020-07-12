@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour
 
 	[SerializeField] private TileData data = null;
 	[SerializeField] private Image image = null;
+	[SerializeField] private SpriteAnimator spriteAnimator;
 	public TileGridCell GridCell = null;
 	[SerializeField] private Button button = null;
 
@@ -46,14 +47,16 @@ public class Tile : MonoBehaviour
 				data = value;
 				if (data != null)
 				{
-					image.sprite = data.Image;
-					image.gameObject.SetActive(true);
+					//image.sprite = data.Image;
+					//image.gameObject.SetActive(true);
+					spriteAnimator.AttachSpriteSheet(data.Image);
+					spriteAnimator.gameObject.SetActive(true);
 					button.interactable = data.Swappable;
 				}
 				else
 				{
-					image.sprite = null;
-					image.gameObject.SetActive(false);
+					spriteAnimator.AttachSpriteSheet(data.Image);
+					spriteAnimator.gameObject.SetActive(true);
 					button.interactable = false;
 				}
 			}

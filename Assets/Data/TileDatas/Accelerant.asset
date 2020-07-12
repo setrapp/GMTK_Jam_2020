@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970fc56b25a04c1bb030248949fc408c, type: 3}
   m_Name: Accelerant
   m_EditorClassIdentifier: 
-  image: {fileID: 6022270779109767975, guid: 6c6b4c6dfa3d62843b67847fe6b36be5, type: 3}
+  image: {fileID: 2800000, guid: 6c6b4c6dfa3d62843b67847fe6b36be5, type: 3}
   detonateFX: []
   burnFX: []
   DestroyOnBurn: 0
