@@ -41,12 +41,21 @@ public class GoalTileData : TileData
 		base.burn(target);
 	}
 
-	public virtual void FallIntoPlace(Tile target)
+	public override void FallIntoPlace(Tile target)
 	{
 		if (target != null && target.GridCell != null)
 		{
 			target.GridCell.CheckForTriplet();
 		}
 	}
+
+	public override void HandleBoardChanged(Tile target)
+	{
+		if (target != null && target.GridCell != null)
+		{
+			target.GridCell.CheckForTriplet();
+		}
+	}
+
 
 }

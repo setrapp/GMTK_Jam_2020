@@ -182,6 +182,7 @@ public class Tile : MonoBehaviour
 		{
 			checkForFalling();
 		}
+		data.HandleBoardChanged(this);
 	}
 
 	private void checkForFalling()

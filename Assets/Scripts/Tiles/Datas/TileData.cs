@@ -78,5 +78,7 @@ public abstract class TileData : ScriptableObject
 		}
 	}
 
-	public virtual void FallIntoPlace(Tile Target) { }
+	public virtual void FallIntoPlace(Tile target) { }
+	public virtual void HandleBoardChanged(Tile target) { }
+
 }
