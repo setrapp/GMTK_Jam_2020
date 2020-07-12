@@ -23,9 +23,7 @@ MonoBehaviour:
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
     weight: 1
   - tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
-    weight: 0.1
-  - tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
-    weight: 0.05
+    weight: 0.4
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3

@@ -27,3 +27,4 @@ MonoBehaviour:
   maxGoalCount: 3
   spawnsBetweenGoals: 1
   minGoalDistanceForSize: 0.5
+  helpText: The grid has grown, how the time has flown.
