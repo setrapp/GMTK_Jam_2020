@@ -63,7 +63,7 @@ MonoBehaviour:
   destroyState: 0
   waitFramesBeforeFall: 5
   maxFallSpeed: 36
-  rematchAfterFall: 0
+  rematchAfterFall: 1
   allowNewTilesToMatch: 0
   isNewTile: 0
 --- !u!114 &4132626072998795945
