@@ -948,6 +948,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1300324852204333864, guid: 47ac5febb4d04bf4ea4055af34652fb8,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1924597055}
     - target: {fileID: 1478953717747666674, guid: 47ac5febb4d04bf4ea4055af34652fb8,
         type: 3}
       propertyPath: m_Sprite
@@ -1094,6 +1099,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4862785826146261691, guid: 47ac5febb4d04bf4ea4055af34652fb8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862785826146261691, guid: 47ac5febb4d04bf4ea4055af34652fb8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5131419183030989375, guid: 47ac5febb4d04bf4ea4055af34652fb8,
         type: 3}
       propertyPath: m_Sprite
@@ -1157,7 +1172,7 @@ PrefabInstance:
     - target: {fileID: 8318968246671759843, guid: 47ac5febb4d04bf4ea4055af34652fb8,
         type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4280558628
+      value: 16777215
       objectReference: {fileID: 0}
     - target: {fileID: 8318968246671759843, guid: 47ac5febb4d04bf4ea4055af34652fb8,
         type: 3}
@@ -1183,11 +1198,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: YouWin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8613601101961949590, guid: 47ac5febb4d04bf4ea4055af34652fb8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8613601101961949590, guid: 47ac5febb4d04bf4ea4055af34652fb8,
         type: 3}

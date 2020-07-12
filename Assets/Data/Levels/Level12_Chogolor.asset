@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a8a09f2520c7462a9c3eae797a3a93e, type: 3}
-  m_Name: Level10_Tripple
+  m_Name: Level12_Chogolor
   m_EditorClassIdentifier: 
-  width: 11
-  height: 11
+  width: 12
+  height: 12
   cells: []
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
@@ -24,10 +24,13 @@ MonoBehaviour:
     weight: 1
   - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
     weight: 0.1
+  - tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
+    weight: 0.1
+  - tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
+    weight: 0.1
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
   maxGoalCount: 3
-  spawnsBetweenGoals: 2
-  minGoalDistanceForSize: 0.6
-  helpText: Accelerant cubes are triggered by any adjacent match of 3 basic cubes.
-    Accelerants will surely accelerate your progress.
+  spawnsBetweenGoals: 1
+  minGoalDistanceForSize: 0.5
+  helpText: 
