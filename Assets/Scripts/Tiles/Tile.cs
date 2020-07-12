@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
+	public enum DestroryState
+	{
+		None = 0,
+		Detonate,
+		Burn
+	}
+
 	[SerializeField] private TileData data = null;
 	[SerializeField] private Image image = null;
 	public TileGridCell GridCell = null;
@@ -16,6 +23,8 @@ public class Tile : MonoBehaviour
 	private const string swapReady = "SwapReady";
 
 	public bool LockedIn = true;
+
+	public DestroryState destroyState = DestroryState.None;
 
 	public TileData Data
 	{

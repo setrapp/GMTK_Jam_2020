@@ -13,20 +13,46 @@ public abstract class TileData : ScriptableObject
 	public abstract bool IsBurnMatch(TileData other);
 
 	// Destroy Tile and take neighbors with it.
-	public virtual void Detonate(Tile target)
+	public void Detonate(Tile target)
 	{
 		if (target != null)
 		{
-			Destroy(target.gameObject);
+			if (target.destroyState == Tile.DestroryState.None)
+			{
+				detonate(target);
+			}
 		}
 	}
 
+	protected virtual void detonate(Tile target)
+	{
+		RemoveFromGrid(target);
+	}
+
 	// Destroy Tile but leave neighbors alone.
-	public virtual void Burn(Tile target)
+	public void Burn(Tile target)
 	{
 		if (target != null)
 		{
-			Destroy(target.gameObject);
+			if (target.destroyState == Tile.DestroryState.None)
+			{
+				burn(target);
+			}
 		}
+	}
+	protected virtual void burn(Tile target)
+	{
+		RemoveFromGrid(target);
+	}
+
+	public void RemoveFromGrid(Tile target)
+	{
+		if (target.GridCell != null)
+		{
+			target.GridCell.Tile = null;
+		}
+
+		target.GridCell = null;
+		Destroy(target.gameObject);
 	}
 }

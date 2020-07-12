@@ -34,7 +34,11 @@ public class TileGridCell : MonoBehaviour
 			if (tile != value)
 			{
 				tile = value;
-				tile.GridCell = this;
+				if (tile != null)
+				{
+					tile.GridCell = this;
+				}
+
 				if (anim != null)
 				{
 					StartCoroutine(RebindAnim());
@@ -246,7 +250,7 @@ public class TileGridCell : MonoBehaviour
 	{
 		if (InTriplet())
 		{
-			BuildDestructionLists(true);
+			BuildDestructionLists(this, 0);
 		}
 	}
 
@@ -315,7 +319,7 @@ public class TileGridCell : MonoBehaviour
 		return false;
 	}
 
-	public void BuildDestructionLists(bool firstCell)
+	public void BuildDestructionLists(TileGridCell starter, int order)
 	{
 		// TODO This method thing is very expensive... maybe we can optimize it.
 
@@ -325,37 +329,45 @@ public class TileGridCell : MonoBehaviour
 		}
 
 
-		if (firstCell)
+		if (starter == null)
 		{
-			Grid.DetonateCells.Add(this);
+			if (Grid.PrepareToDetonate(this, 0, this))
+			{
+				order = 0;
+				starter = this;
+			}
+			else
+			{
+				// A list starting with cell already exists, don't try starting a new one.
+				return;
+			}
 		}
 
 		var recurseNeighbors = new List<TileGridCell>();
 
 		foreach (var neighbor in CardinalNeighbors())
 		{
-			bool burn = true;
-			if (neighbor != null && neighbor.IsValidMatch(Grid.DetonateCells[0]))
+			//bool burn = true;
+			if (neighbor != null && neighbor.IsValidMatch(starter))
 			{
 				if (MatchInLine(neighbor))
 				{
-					burn = false;
-					if (!Grid.DetonateCells.Contains(neighbor))
+					//burn = false;
+					if (Grid.PrepareToDetonate(neighbor, order + 1, starter))
 					{
-						Grid.DetonateCells.Add(neighbor);
 						recurseNeighbors.Add(neighbor);
 					}
 				}
 
 			}
 
-			if (burn)
+			/*if (burn)
 			{
 				if (!Grid.BurnCells.Contains(neighbor))
 				{
 					Grid.BurnCells.Add(neighbor);
 				}
-			}
+			}*/
 		}
 
 		foreach (var neighbor in AllNeighbors())
@@ -368,7 +380,7 @@ public class TileGridCell : MonoBehaviour
 
 		foreach (var neighbor in recurseNeighbors)
 		{
-			neighbor.BuildDestructionLists(false);
+			neighbor.BuildDestructionLists(starter, order++);
 		}
 	}
 

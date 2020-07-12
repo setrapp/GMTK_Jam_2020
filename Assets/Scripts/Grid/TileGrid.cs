@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using UnityEngine;
 
 namespace Grid
@@ -9,6 +8,7 @@ namespace Grid
 	public class TileGrid : MonoBehaviour
 	{
 		[SerializeField] private Level setupData = null;
+
 		private Level SetupData
 		{
 			get { return setupData; }
@@ -31,13 +31,28 @@ namespace Grid
 		public int GridWidth => cells.GetLength(0);
 		public int GridHeight => cells.GetLength(1);
 
-		public List<TileGridCell> DetonateCells = null;
-		public List<TileGridCell> BurnCells = null;
-		public List<TileGridCell> DetonateLaterCells = null;
+		private Dictionary<TileGridCell, List<DetonateCellData>> DetonateCells = null;
+
+		[SerializeField] private int detonateOrderDelay = 1;
+
+		[SerializeField] private float populateTopDelay = 1;
+		private float timeUntilPopulateTop = 0;
 
 		private void Start()
 		{
 			GenerateGrid(levelManager.Levels[levelManager.CurrentLevel]);
+			DetonateCells = new Dictionary<TileGridCell, List<DetonateCellData>>();
+			timeUntilPopulateTop = populateTopDelay;
+		}
+
+		private void Update()
+		{
+			timeUntilPopulateTop -= Time.deltaTime;
+			if (timeUntilPopulateTop <= 0)
+			{
+				PopulateTopCells();
+				timeUntilPopulateTop = populateTopDelay;
+			}
 		}
 
 		public void GenerateGrid(Level data)
@@ -57,7 +72,7 @@ namespace Grid
 			var width = SetupData.Width;
 			var height = SetupData.Height;
 
-			container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float)height / width));
+			container.sizeDelta = new Vector2(rectTransform.rect.width, rectTransform.rect.width * ((float) height / width));
 			float cellSize = container.sizeDelta.x / width;
 			float startX = (-rectTransform.rect.width / 2) + (cellSize / 2);
 			float startY = (-rectTransform.rect.height / 2) + (cellSize / 2);
@@ -71,7 +86,7 @@ namespace Grid
 				{
 					cells[i, j] = Instantiate(cellPrefab, container).GetComponent<TileGridCell>();
 					cells[i, j].Grid = this;
-					((RectTransform)cells[i, j].transform).sizeDelta = new Vector2(cellSize, cellSize);
+					((RectTransform) cells[i, j].transform).sizeDelta = new Vector2(cellSize, cellSize);
 					((RectTransform) cells[i, j].transform).anchoredPosition =
 						new Vector2(startX + (cellSize * i), startY + (cellSize * j));
 
@@ -135,6 +150,7 @@ namespace Grid
 			{
 				return null;
 			}
+
 			return cells[x, y];
 		}
 
@@ -184,15 +200,13 @@ namespace Grid
 			selectedCell.Tile.MoveToGridCell();
 			other.Tile.MoveToGridCell();
 
-			clearBuildLists();
-
 			selectedCell.CheckForTriplet();
 			other.CheckForTriplet();
 
+			StartCoroutine(DetonateAndBurn(selectedCell));
+			StartCoroutine(DetonateAndBurn(other));
+
 			ChooseSwapTarget(null);
-
-			StartCoroutine(DetonateAndBurn());
-
 			return true;
 		}
 
@@ -207,68 +221,152 @@ namespace Grid
 			return Cell(cell.Data.x, cell.Data.y - 1);
 		}
 
-		public IEnumerator DetonateAndBurn()
+		public bool PrepareToDetonate(TileGridCell toDetonate, int order, TileGridCell startingCell)
 		{
-			foreach (var cell in DetonateCells)
+			if (startingCell == null)
 			{
-				cell.Tile.Detonate();
+				return false;
 			}
 
-			foreach (var cell in BurnCells)
+			if (!DetonateCells.ContainsKey(startingCell))
 			{
-				bool burn = true;
-#if UNITY_EDITOR
-				burn = !ignoreBurnInEditor;
-#endif
-				if (burn)
+				DetonateCells.Add(startingCell, new List<DetonateCellData>());
+				DetonateCells[startingCell].Add(new DetonateCellData()
 				{
-					cell.Tile.Burn();
+					cell = startingCell,
+					order = 0
+				});
+
+				return true;
+			}
+
+			bool alreadyTracked = false;
+			bool alteredList = false;
+			foreach (var cellData in DetonateCells[startingCell])
+			{
+				if (cellData.cell == toDetonate)
+				{
+					alreadyTracked = true;
+					if (order < cellData.order)
+					{
+						cellData.order = order;
+						alteredList = true;
+					}
+
+					break;
 				}
 			}
 
-			yield return null;
-
-			foreach (var cell in cells)
+			if (!alreadyTracked)
 			{
-				if (cell != null)
+				alteredList = true;
+				DetonateCells[startingCell].Add(new DetonateCellData()
 				{
-					cell.HandleGridChange();
-				}
+					cell = toDetonate,
+					order = order
+				});
 			}
+
+			return alteredList;
 		}
 
-		private void clearBuildLists()
+		public IEnumerator DetonateAndBurn(TileGridCell starter)
 		{
-			if (DetonateCells == null)
+			if (starter != null && DetonateCells.ContainsKey(starter))
 			{
-				DetonateCells = new List<TileGridCell>();
-			}
+				List<DetonateCellData> detonateData = DetonateCells[starter];
 
-			if (BurnCells == null)
-			{
-				BurnCells = new List<TileGridCell>();
-			}
+				var toDetonate = new List<TileGridCell>();
+				int order = 0;
+				bool done = false;
 
-			if (DetonateLaterCells == null)
-			{
-				DetonateLaterCells = new List<TileGridCell>();
-			}
+				while (!done)
+				{
+					for (int i = 0; i < detonateData.Count; i++)
+					{
+						// TODO Remove detonatedCells from list (make sure this doesn't break list checks when adding news (like weird loops)
 
-			DetonateCells.Clear();
-			BurnCells.Clear();
-			DetonateLaterCells.Clear();
+						var cell = detonateData[i];
+						if (cell != null && cell.cell != null && cell.cell.Tile != null && cell.order == order)
+						{
+							toDetonate.Add(cell.cell);
+							detonateData.RemoveAt(i);
+							i--;
+						}
+					}
+
+					if (toDetonate.Count > 0)
+					{
+						foreach (var cell in toDetonate)
+						{
+							if (cell != null && cell.Tile != null)
+							{
+								cell.Tile.Detonate();
+
+								foreach (var neighbor in cell.CardinalNeighbors())
+								{
+									var burn = neighbor.TileReady;
+#if UNITY_EDITOR
+									burn = burn && !ignoreBurnInEditor;
+#endif
+									if (burn && !toDetonate.Contains(neighbor))
+									{
+										if (neighbor.Tile != null)
+										{
+											neighbor.Tile.Burn();
+										}
+									}
+								}
+							}
+						}
+
+						yield return null;
+
+						foreach (var cell in cells)
+						{
+							if (cell != null)
+							{
+								cell.HandleGridChange();
+							}
+						}
+
+						for (int i = 0; i < detonateOrderDelay; i++)
+						{
+							yield return null;
+						}
+
+						order++;
+					}
+					else
+					{
+						done = true;
+					}
+				}
+
+				DetonateCells[starter].Clear();
+				DetonateCells.Remove(starter);
+			}
 		}
 
 		public void PopulateTopCells()
 		{
 			// TODO Handle rotation
-			for (int i = 0; i < GridWidth; i++)
-			{
-				if (Cell(i, GridHeight - 1).Tile == null)
-				{
+			int y = GridHeight - 1;
+			int cellsOnTop = GridWidth;
 
+			for (int i = 0; i < cellsOnTop; i++)
+			{
+				if (cells[i, y].Tile == null)
+				{
+					cells[i, y].GenerateTile(setupData.GetRandomTileData());
 				}
 			}
 		}
+	}
+
+	public class DetonateCellData
+	{
+		public TileGridCell cell;
+		public int order = 0;
 	}
 }
