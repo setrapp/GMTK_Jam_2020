@@ -7,7 +7,12 @@ public abstract class TileData : ScriptableObject
 	[SerializeField] private Sprite image = null;
 	public Sprite Image => image;
 
+	[SerializeField] private GameObject[] detonateFX;
+	[SerializeField] private GameObject[] burnFX;
+
 	public bool Swappable => true;
+
+	public bool DestroyOnBurn = false;
 
 	public abstract bool IsMatch(TileData other);
 	public abstract bool IsBurnMatch(TileData other);
@@ -19,6 +24,11 @@ public abstract class TileData : ScriptableObject
 		{
 			if (target.destroyState == Tile.DestroryState.None)
 			{
+				if (target.GridCell != null && detonateFX.Length > 0)
+				{
+					target.GridCell.ShowDetonate(detonateFX[Random.Range(0, detonateFX.Length)]);
+				}
+
 				detonate(target);
 			}
 		}
@@ -36,13 +46,21 @@ public abstract class TileData : ScriptableObject
 		{
 			if (target.destroyState == Tile.DestroryState.None)
 			{
+				if (target.GridCell != null && burnFX.Length > 0)
+				{
+					target.GridCell.ShowBurn(burnFX[Random.Range(0, burnFX.Length)]);
+				}
+
 				burn(target);
 			}
 		}
 	}
 	protected virtual void burn(Tile target)
 	{
-		RemoveFromGrid(target);
+		if (DestroyOnBurn)
+		{
+			RemoveFromGrid(target);
+		}
 	}
 
 	public void RemoveFromGrid(Tile target)

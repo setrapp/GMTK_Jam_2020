@@ -5,12 +5,12 @@ public class ShapeTileData : TileData
 {
 	public enum TileShape
 	{
-		Shape0 = 0,
-		Shape1 = 1,
-		Shape2 = 2
+		Circle = 0,
+		Square = 1,
+		Triangle = 2
 	}
 
-	[SerializeField] private TileShape shape = TileShape.Shape0;
+	[SerializeField] private TileShape shape = TileShape.Circle;
 
 	public TileShape Shape
 	{

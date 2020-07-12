@@ -5,12 +5,15 @@ using Grid;
 using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
+using AnimatorController = UnityEditor.Animations.AnimatorController;
 
 public class TileGridCell : MonoBehaviour
 {
 	[SerializeField] private TileGridCellData data = null;
 	private TileGrid grid = null;
 	[SerializeField] private Animator anim;
+
+	[SerializeField] private GameObject fxRoot = null;
 
 	public TileGrid Grid
 	{
@@ -208,6 +211,7 @@ public class TileGridCell : MonoBehaviour
 		if (tile == null)
 		{
 			tile = Instantiate(Grid.TilePrefab, transform).GetComponent<Tile>();
+			tile.transform.SetSiblingIndex(0);
 		}
 
 		tile.GridCell = this;
@@ -398,5 +402,21 @@ public class TileGridCell : MonoBehaviour
 	public TileGridCell GetCellBelow()
 	{
 		return Grid.GetCellBelow(this);
+	}
+
+	public void ShowDetonate(GameObject detonateFX)
+	{
+		if (detonateFX != null && fxRoot != null)
+		{
+			Instantiate(detonateFX, fxRoot.transform);
+		}
+	}
+
+	public void ShowBurn(GameObject burnFX)
+	{
+		if (burnFX != null && fxRoot != null)
+		{
+			Instantiate(burnFX, fxRoot.transform);
+		}
 	}
 }

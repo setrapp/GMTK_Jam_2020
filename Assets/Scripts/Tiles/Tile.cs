@@ -173,11 +173,18 @@ public class Tile : MonoBehaviour
 	public void Detonate()
 	{
 		data.Detonate(this);
+
+		destroyState = DestroryState.Detonate;
 	}
 
 	public void Burn()
 	{
 		data.Burn(this);
+
+		if (data.DestroyOnBurn)
+		{
+			destroyState = DestroryState.Burn;
+		}
 	}
 
 	public void HandleGridChange()

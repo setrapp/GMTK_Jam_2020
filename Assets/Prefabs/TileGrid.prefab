@@ -397,7 +397,6 @@ MonoBehaviour:
   container: {fileID: 3048890753952222632}
   orphanTileContainer: {fileID: 6131791572051777611}
   swapper: {fileID: 0}
-  ignoreBurnInEditor: 1
   detonateOrderDelay: 10
   populateTopDelay: 1
 --- !u!1 &4008567007382875687

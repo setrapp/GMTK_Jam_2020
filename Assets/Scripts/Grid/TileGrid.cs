@@ -21,7 +21,7 @@ namespace Grid
 		[SerializeField] private RectTransform container = null;
 		[SerializeField] public RectTransform orphanTileContainer = null;
 		[SerializeField] private TileSwapper swapper = null;
-		[SerializeField] private bool ignoreBurnInEditor = false;
+
 		public TileSwapper Swapper => swapper;
 
 		private TileGridCell selectedCell = null;
@@ -311,9 +311,6 @@ namespace Grid
 								foreach (var neighbor in cell.CardinalNeighbors())
 								{
 									var burn = neighbor.TileReady;
-#if UNITY_EDITOR
-									burn = burn && !ignoreBurnInEditor;
-#endif
 									if (burn && !toDetonate.Contains(neighbor))
 									{
 										if (neighbor.Tile != null)
