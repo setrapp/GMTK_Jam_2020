@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8a09f2520c7462a9c3eae797a3a93e, type: 3}
   m_Name: TestLevel
   m_EditorClassIdentifier: 
-  width: 7
-  height: 7
+  width: 20
+  height: 20
   cells:
   - x: 0
     y: 0
@@ -23,20 +23,20 @@ MonoBehaviour:
     tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
-    weight: 1
-  - tileData: {fileID: 11400000, guid: 1ad8feab1751d4a1ca81d2232acdad39, type: 2}
-    weight: 1
-  - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
-    weight: 1
-  - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
     weight: 0.5
+  - tileData: {fileID: 11400000, guid: 1ad8feab1751d4a1ca81d2232acdad39, type: 2}
+    weight: 0.5
+  - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
+    weight: 0.5
+  - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
+    weight: 0.8
   - tileData: {fileID: 11400000, guid: 0f288037f636b4621b3f38ecf372786c, type: 2}
     weight: 0.1
   - tileData: {fileID: 11400000, guid: 4d96cfd0b064e47dc9900d7f9f425b1a, type: 2}
     weight: 0.1
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
-  chanceToSpawnGoal: 1
-  maxGoalCount: 3
+  chanceToSpawnGoal: 0.3
+  maxGoalCount: 10
   spawnsBetweenGoals: 5
   minGoalDistanceForSize: 0.3
   helpText: 

@@ -4,8 +4,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GoalTileData", menuName = "ScriptableObjects/TileDatas/GoalTileData")]
 public class GoalTileData : TileData
 {
+	[SerializeField] private bool isSwappable = true;
+
+
 	public override void OnSpawn(Tile target, TileGrid grid)
 	{
+		Swappable = isSwappable;
 		grid.activeGoals.Add(target);
 	}
 
@@ -36,4 +40,13 @@ public class GoalTileData : TileData
 		}
 		base.burn(target);
 	}
+
+	public virtual void FallIntoPlace(Tile target)
+	{
+		if (target != null && target.GridCell != null)
+		{
+			target.GridCell.CheckForTriplet();
+		}
+	}
+
 }

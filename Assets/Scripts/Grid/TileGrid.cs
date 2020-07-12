@@ -382,16 +382,19 @@ namespace Grid
 
 				while (!done)
 				{
-					var toDetonate = new List<TileGridCell>();
+					var toDetonate = new List<DetonateCellData>();
+					var detonateCells = new List<TileGridCell>();
+
 
 					for (int i = 0; i < detonateData.Count; i++)
 					{
 						// TODO Remove detonatedCells from list (make sure this doesn't break list checks when adding news (like weird loops)
 
 						var cell = detonateData[i];
-						if (cell != null && cell.cell != null && cell.cell.Tile != null && cell.order == order && cell.tile == cell.cell.Tile)
+						if (cell != null && cell.order == order)
 						{
-							toDetonate.Add(cell.cell);
+							toDetonate.Add(cell);
+							detonateCells.Add(cell.cell);
 							detonateData.RemoveAt(i);
 							i--;
 						}
@@ -399,23 +402,27 @@ namespace Grid
 
 					if (toDetonate.Count > 0)
 					{
-						foreach (var cell in toDetonate)
+						for (int i = 0; i < toDetonate.Count; i++)
 						{
-							if (cell != null && cell.Tile != null)
+							var cell = toDetonate[i];
+							if (cell == null || cell.cell == null || cell.cell.Tile == null || cell.tile != cell.cell.Tile)
 							{
-								cell.Tile.Detonate();
+								continue;
+							}
 
-								foreach (var neighbor in cell.CardinalNeighbors())
+							cell.cell.Tile.Detonate();
+
+							foreach (var neighbor in cell.cell.CardinalNeighbors())
+							{
+								var burn = neighbor.TileReady;
+								if (burn && !detonateCells.Contains(neighbor))
 								{
-									var burn = neighbor.TileReady;
-									if (burn && !toDetonate.Contains(neighbor))
+									if (neighbor.Tile != null)
 									{
-										if (neighbor.Tile != null)
-										{
-											neighbor.Tile.Burn();
-										}
+										neighbor.Tile.Burn();
 									}
 								}
+
 							}
 						}
 

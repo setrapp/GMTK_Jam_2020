@@ -48,8 +48,6 @@ public class Tile : MonoBehaviour
 				data = value;
 				if (data != null)
 				{
-					//image.sprite = data.Image;
-					//image.gameObject.SetActive(true);
 					spriteAnimator.AttachSpriteSheet(data.Image, data.framesPerSprite);
 					spriteAnimator.gameObject.SetActive(true);
 					button.interactable = data.Swappable;
@@ -145,7 +143,7 @@ public class Tile : MonoBehaviour
 		}
 
 		// TODO Do this over time
-		transform.SetParent(GridCell.tileContainer.transform);
+		parentToCell(GridCell);
 		transform.localPosition = Vector3.zero;
 	}
 
@@ -238,19 +236,28 @@ public class Tile : MonoBehaviour
 			{
 				float bestDist = -1;
 				TileGridCell bestCell = null;
-				foreach (var cell in fallThroughTiles)
+
+				while (bestCell == null)
 				{
-					var sqrDist = (transform.position - cell.transform.position).sqrMagnitude;
-					if (bestDist < 0 || sqrDist < bestDist)
+					foreach (var cell in fallThroughTiles)
 					{
-						bestDist = sqrDist;
-						bestCell = cell;
+						var sqrDist = (transform.position - cell.transform.position).sqrMagnitude;
+						if (cell.Tile == null && cell.awaitingFallingTile && (bestDist < 0 || sqrDist < bestDist))
+						{
+							bestDist = sqrDist;
+							bestCell = cell;
+						}
+					}
+
+					if (bestCell == null)
+					{
+						yield return null;
 					}
 				}
 
 				fallToCell.awaitingFallingTile = null;
 				bestCell.Tile = this;
-				transform.SetParent(bestCell.tileContainer.transform);
+				parentToCell(bestCell, true);
 				transform.localPosition = Vector3.zero;
 
 				while (fallToCell.Grid.Rotating)
@@ -280,24 +287,40 @@ public class Tile : MonoBehaviour
 			yield return null;
 		}
 
-		fallToCell.awaitingFallingTile = null;
-		fallToCell.Tile = this;
-		transform.SetParent(fallToCell.tileContainer.transform);
-
-		fallRoutine = null;
-		fallToCell = null;
-		LockedIn = true;
-
-		HandleGridChange();
-
-		if (rematchAfterFall)
+		bool nowhereToFall = false;
+		if ((fallToCell.awaitingFallingTile != null && fallToCell.awaitingFallingTile != this)
+		    || (fallToCell.Tile && fallToCell.Tile != this))
 		{
-			yield return null;
-			if (GridCell != null)
+			nowhereToFall = true;
+		}
+
+		if (!nowhereToFall)
+		{
+			fallToCell.awaitingFallingTile = null;
+			fallToCell.Tile = this;
+			parentToCell(fallToCell, true);
+
+			fallRoutine = null;
+			fallToCell = null;
+			LockedIn = true;
+
+			HandleGridChange();
+
+			data.FallIntoPlace(this);
+
+			if (rematchAfterFall)
 			{
-				GridCell.CheckForTriplet();
-				GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
+				yield return null;
+				if (GridCell != null)
+				{
+					GridCell.CheckForTriplet();
+					GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
+				}
 			}
+		}
+		else
+		{
+			Destroy(gameObject);
 		}
 	}
 
@@ -312,5 +335,16 @@ public class Tile : MonoBehaviour
 		}
 
 		GridCell = null;
+	}
+
+	private void parentToCell(TileGridCell cell, bool destroyIfConflict = false)
+	{
+		/*if (destroyIfConflict && cell.tileContainer.transform.childCount > 0)
+		{
+			Destroy(cell.transform.GetChild(0).gameObject);
+			cell.Tile = this;
+		}*/
+
+		transform.SetParent(GridCell.tileContainer.transform);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 
 [CreateAssetMenu(fileName = "AccelerantTileData", menuName = "ScriptableObjects/TileDatas/AccelerantTileData")]
 public class AccelerantTileData : TileData
@@ -41,5 +42,11 @@ public class AccelerantTileData : TileData
 			accelerantPin.SetData(this);
 			accelerantPin.ResetTime();
 		}
+	}
+
+	public virtual void FallIntoPlace(Tile target)
+	{
+		// This is probably a terrible idea, but it might cause more chain reactions.
+		burn(target);
 	}
 }

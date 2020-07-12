@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Grid;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class TileData : ScriptableObject
 {
@@ -13,7 +15,7 @@ public abstract class TileData : ScriptableObject
 	[SerializeField] private GameObject[] detonateFX;
 	[SerializeField] private GameObject[] burnFX;
 
-	public bool Swappable => true;
+	[NonSerialized] public bool Swappable = true;
 
 	public bool DestroyOnBurn = false;
 
@@ -75,4 +77,6 @@ public abstract class TileData : ScriptableObject
 			Destroy(target.gameObject);
 		}
 	}
+
+	public virtual void FallIntoPlace(Tile Target) { }
 }
