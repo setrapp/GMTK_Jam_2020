@@ -27,3 +27,5 @@ MonoBehaviour:
   maxGoalCount: 3
   spawnsBetweenGoals: 0
   minGoalDistanceForSize: 0.5
+  helpText: Tap adjacent tiles to swap them.<br><br>Match tiles in a line of 3 to
+    detonate them.

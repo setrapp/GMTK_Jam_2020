@@ -65,7 +65,12 @@ namespace Grid
 			DetonateCells = new Dictionary<TileGridCell, List<DetonateCellData>>();
 			timeUntilPopulateTop = populateTopDelay;
 
-			titleText.SetText(setupData.name);
+			var levelName = setupData.name;
+			if (levelName.Contains('_'))
+			{
+				levelName = levelName.Substring(levelName.IndexOf('_') + 1);
+			}
+			titleText.SetText(levelName);
 			helpText.SetText(setupData.helpText);
 		}
 
@@ -78,7 +83,7 @@ namespace Grid
 				timeUntilPopulateTop = populateTopDelay;
 			}
 
-			if (Input.GetKeyDown(KeyCode.R)){ Rotate(90);}
+			//if (Input.GetKeyDown(KeyCode.R)){ Rotate(90);}
 		}
 
 		public void GenerateGrid(Level data)
