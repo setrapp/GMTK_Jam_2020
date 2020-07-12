@@ -18,7 +18,7 @@ public class ShapeTileData : TileData
 		set { shape = value; }
 	}
 
-	public override bool IsMatch(TileData other)
+	public override bool IsMatch(TileData other, Tile targetTile)
 	{
 		if (other != null)
 		{
@@ -30,10 +30,5 @@ public class ShapeTileData : TileData
 		}
 
 		return false;
-	}
-
-	public override bool IsBurnMatch(TileData other)
-	{
-		return IsMatch(other);
 	}
 }
