@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960da4efdb1a34816860d4464d1a355c, type: 3}
   m_Name: Shape1
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 0fda5b92ad697284a94b7a2d3014679e, type: 3}
+  image: {fileID: 21300000, guid: b9228c327d198ae449984466c82e30c7, type: 3}
   shape: 1
