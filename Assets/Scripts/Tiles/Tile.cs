@@ -243,7 +243,8 @@ public class Tile : MonoBehaviour
 					}
 				}
 
-				GridCell = bestCell;
+				fallToCell.awaitingFallingTile = null;
+				bestCell.Tile = this;
 				transform.SetParent(bestCell.transform);
 				transform.localPosition = Vector3.zero;
 
