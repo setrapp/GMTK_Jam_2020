@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8a09f2520c7462a9c3eae797a3a93e, type: 3}
   m_Name: Level1_Taro
   m_EditorClassIdentifier: 
-  width: 5
-  height: 5
+  width: 20
+  height: 20
   cells: []
   allowedRandomTiles:
   - tileData: {fileID: 11400000, guid: c6066ed770e9a4dcba67952e29647973, type: 2}
@@ -21,6 +21,8 @@ MonoBehaviour:
   - tileData: {fileID: 11400000, guid: 1ad8feab1751d4a1ca81d2232acdad39, type: 2}
     weight: 1
   - tileData: {fileID: 11400000, guid: 28f751380206341a0ada7c04b32b2208, type: 2}
+    weight: 1
+  - tileData: {fileID: 11400000, guid: 6e280a9d03d7e4e2b9797bc55aa47cbc, type: 2}
     weight: 1
   goalTileData: {fileID: 11400000, guid: cbd88fdabae51428eaeebe3dcebf96ad, type: 2}
   chanceToSpawnGoal: 1
