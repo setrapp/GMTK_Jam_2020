@@ -29,7 +29,12 @@ public class Tile : MonoBehaviour
 	private TileGridCell fallToCell = null;
 	private Coroutine fallRoutine = null;
 
+	[SerializeField] private float waitFramesBeforeFall = 0;
 	[SerializeField] private float maxFallSpeed = 1;
+	[SerializeField] private bool rematchAfterFall = true;
+	[SerializeField] private bool allowNewTilesToMatch = true;
+
+	public bool isNewTile = false;
 
 	public TileData Data
 	{
@@ -53,6 +58,12 @@ public class Tile : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	private void Update()
+	{
+		// TODO I would rather not have all the tiles updating all the time, but this falling bug is very annoying.
+		HandleGridChange();
 	}
 
 	public void Reset()
@@ -165,12 +176,19 @@ public class Tile : MonoBehaviour
 
 	public void HandleGridChange()
 	{
-		checkForFalling();
+		if (fallToCell == null)
+		{
+			checkForFalling();
+		}
 	}
 
 	private void checkForFalling()
 	{
 		// TODO This is gonna get weird with rotation
+		if (GridCell == null)
+		{
+			return;
+		}
 
 		var cellBelow = GridCell.GetCellBelow();
 		while (cellBelow != null && cellBelow.Tile == null && cellBelow.awaitingFallingTile == null)
@@ -187,6 +205,11 @@ public class Tile : MonoBehaviour
 
 	private IEnumerator fall()
 	{
+		for (int i = 0; i < waitFramesBeforeFall; i++)
+		{
+			yield return null;
+		}
+
 		if (GridCell != null)
 		{
 			removeFromCell();
@@ -220,12 +243,16 @@ public class Tile : MonoBehaviour
 
 		HandleGridChange();
 
-		yield return null;
-		if (GridCell != null)
+		if (rematchAfterFall && (!isNewTile || allowNewTilesToMatch))
 		{
-			GridCell.CheckForTriplet();
-			GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
+			yield return null;
+			if (GridCell != null)
+			{
+				GridCell.CheckForTriplet();
+				GridCell.Grid.StartCoroutine(GridCell.Grid.DetonateAndBurn(GridCell));
+			}
 		}
+		isNewTile = false;
 	}
 
 	public void removeFromCell()

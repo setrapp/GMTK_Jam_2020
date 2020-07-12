@@ -207,7 +207,7 @@ public class TileGridCell : MonoBehaviour
 		}
 	}
 
-	public void GenerateTile(TileData tileData)
+	public Tile GenerateTile(TileData tileData)
 	{
 		if (tile == null)
 		{
@@ -218,6 +218,8 @@ public class TileGridCell : MonoBehaviour
 		tile.Data = tileData;
 
 		tile.Data.OnSpawn(tile, Grid);
+
+		return tile;
 	}
 
 	public bool CanBeginSwap()

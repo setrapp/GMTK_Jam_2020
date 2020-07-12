@@ -61,7 +61,11 @@ MonoBehaviour:
   anim: {fileID: 0}
   LockedIn: 1
   destroyState: 0
+  waitFramesBeforeFall: 10
   maxFallSpeed: 36
+  rematchAfterFall: 0
+  allowNewTilesToMatch: 0
+  isNewTile: 0
 --- !u!114 &4132626072998795945
 MonoBehaviour:
   m_ObjectHideFlags: 0
